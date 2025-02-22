@@ -2,6 +2,7 @@
 
 #include "common.h"
 #include "utils/window_utils.h"
+#include "game/level.h"
 
 #include <stdexcept>
 #include <chrono>
@@ -32,6 +33,7 @@ Game::~Game() {
 
 void Game::InitGameLoop() {
   bool running = true;
+  Level* level = new Level(renderer);
   while (running) {
     SDL_Event event;
     auto frame_start_time = std::chrono::high_resolution_clock::now();
@@ -39,9 +41,13 @@ void Game::InitGameLoop() {
       if (event.type == SDL_QUIT) {
         running = false;
       }
+      level->InputHandler(&event);
     }
     SDL_SetRenderDrawColor(renderer, 0x0, 0x0, 0x0, 255);
     SDL_RenderClear(renderer);
+    
+    level->RenderLevel(status.delta_time);
+
     SDL_RenderPresent(renderer);
     auto frame_stop_time = std::chrono::high_resolution_clock::now();
     status.delta_time = std::chrono::duration<float, std::chrono::milliseconds::period>(frame_stop_time - frame_start_time).count();
