@@ -6,7 +6,7 @@
 
 Level::Level(SDL_Renderer* renderer_) {
   renderer = renderer_;
-  player = new Player(renderer, 22, 200, WINDOW_HEIGHT / 2 - 11, 0.3);
+  player = new Player(renderer, 22, 200, WINDOW_HEIGHT / 2 - 11, 0.28);
   level_loaded = true; // TODO: Change this to FALSE in future revision for level loading.
 }
 
