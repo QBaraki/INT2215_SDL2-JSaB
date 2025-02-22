@@ -67,9 +67,6 @@ void Player::UpdatePosition(float delta_time) {
   Vec2d offset;
   offset.x = (key[1].is_down * -speed) + (key[2].is_down * speed);
   offset.y = (key[0].is_down * -speed) + (key[3].is_down * speed);
-  if (offset.x != 0 || offset.y != 0) {
-    std::cerr << "Player::Update::Position()::offset: " << offset.x << ' ' << offset.y << '\n';
-  }
   position += offset * delta_time;
   int padding = 8;
   if (position.x < padding) {
