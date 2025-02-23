@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <cmath>
 
 Player::Player(SDL_Renderer* renderer_, int size_, int x_, int y_, float speed_) {
   renderer = renderer_;
@@ -76,6 +77,7 @@ void Player::InputHandler(SDL_Event* event) {
   }
 }
 
+// TODO: Normalize speed for diagional movement.
 void Player::UpdatePosition(float delta_time) {
   Vec2d offset;
   offset.x = (key[1].is_down * -speed) + (key[2].is_down * speed);
@@ -94,6 +96,29 @@ void Player::UpdatePosition(float delta_time) {
   if (position.y + size + padding > WINDOW_HEIGHT) {
     position.y = WINDOW_HEIGHT - size - padding;
   }
-  // TODO: Player rotation
-  ;
+  // Rotate player.
+  float destination_angle;
+  if (offset.x < 0) {
+    destination_angle = 270.0;
+  } else {
+    destination_angle = 90.0;
+  }
+  if (offset.y < 0) {
+    destination_angle += (offset.x < 0 ? 45.0 : (offset.x > 0 ? -45.0 : -90.0));
+  } else if (offset.y > 0) {
+    destination_angle += (offset.x > 0 ? 45.0 : (offset.x < 0 ? -45.0 : 90.0));
+  }
+  if (angle != destination_angle) {
+    float diff = destination_angle - angle;
+    if (diff > 180.0) {
+      diff -= 360.0;
+    } else if (diff <= -180.0) {
+      diff += 360.0;
+    }
+    if (diff > 0) {         // Rotate right.
+      angle++;
+    } else if (diff < 0) {  // Rotate left.
+      angle--;
+    }
+  }
 }
