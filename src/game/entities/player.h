@@ -12,7 +12,9 @@ class Player {
   };
 
   SDL_Renderer* renderer;
+  SDL_Texture* texture;
   SDL_Rect rect;
+  float angle;
   Key key[4]; // key[0] = up, key[1] = left, key[2] = right, key[3] = down.
   int size;
   float speed;

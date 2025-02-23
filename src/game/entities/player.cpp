@@ -3,6 +3,7 @@
 #include "common.h"
 
 #include <iostream>
+#include <stdexcept>
 
 Player::Player(SDL_Renderer* renderer_, int size_, int x_, int y_, float speed_) {
   renderer = renderer_;
@@ -11,6 +12,19 @@ Player::Player(SDL_Renderer* renderer_, int size_, int x_, int y_, float speed_)
   position = start_position;
   rect.w = rect.h = size;
   speed = speed_;
+  angle = 90.0f;
+
+  // Init player 'texture'
+  texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, size, size);
+  if (!texture) {
+    throw std::runtime_error("Texture creation failed! SDL error: " + std::string(SDL_GetError()));
+  }
+  SDL_Rect r = {0, 0, size, size};
+  SDL_SetRenderTarget(renderer, texture);
+  SDL_SetRenderDrawColor(renderer, 0x00, 0xFF, 0xFF, 0xFF);
+  SDL_RenderFillRect(renderer, &r);
+  SDL_SetRenderTarget(renderer, nullptr);
+
   // Control keys.
   key[0].binding = SDLK_UP;
   key[1].binding = SDLK_LEFT;
@@ -25,8 +39,7 @@ Player::~Player() {
 void Player::Draw() {
   rect.x = static_cast<int>(position.x);
   rect.y = static_cast<int>(position.y);
-  SDL_SetRenderDrawColor(renderer, 0x00, 0xFF, 0xFF, 0xFF);
-  SDL_RenderFillRect(renderer, &rect);
+  SDL_RenderCopyEx(renderer, texture, nullptr, &rect, angle, nullptr, SDL_FLIP_NONE);
 }
 
 void Player::HandleKeyDown(SDL_Event* event) {
@@ -81,4 +94,6 @@ void Player::UpdatePosition(float delta_time) {
   if (position.y + size + padding > WINDOW_HEIGHT) {
     position.y = WINDOW_HEIGHT - size - padding;
   }
+  // TODO: Player rotation
+  ;
 }
