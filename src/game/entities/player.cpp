@@ -34,7 +34,7 @@ Player::Player(SDL_Renderer* renderer_, int size_, int x_, int y_, float speed_)
 }
 
 Player::~Player() {
-  ;
+  SDL_DestroyTexture(texture);
 }
 
 void Player::Draw() {
@@ -44,7 +44,7 @@ void Player::Draw() {
 }
 
 void Player::HandleKeyDown(SDL_Event* event) {
-  std::cerr << "Player::HandleKeyDown() called.\n";
+  //std::cerr << "Player::HandleKeyDown() called.\n";
   if (event->key.keysym.sym == key[0].binding) {         // Go up.
     key[0].is_down = true;
   } else if (event->key.keysym.sym == key[1].binding) {  // Go left.
