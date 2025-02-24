@@ -77,11 +77,14 @@ void Player::InputHandler(SDL_Event* event) {
   }
 }
 
-// TODO: Normalize speed for diagional movement.
 void Player::UpdatePosition(float delta_time) {
   Vec2d offset;
   offset.x = (key[1].is_down * -speed) + (key[2].is_down * speed);
   offset.y = (key[0].is_down * -speed) + (key[3].is_down * speed);
+  // Normalize player's diagonal movement.
+  if (offset.x && offset.y) {
+    offset *= 0.86602540378f;
+  }
   position += offset * delta_time;
   int padding = 8;
   if (position.x < padding) {

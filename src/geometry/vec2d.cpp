@@ -28,3 +28,9 @@ Vec2d& Vec2d::operator*=(const Vec2d& other) {
   y *= other.y;
   return *this;
 }
+
+Vec2d& Vec2d::operator*=(const float& other) {
+  x *= other;
+  y *= other;
+  return *this;
+}
