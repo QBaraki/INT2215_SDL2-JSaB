@@ -44,7 +44,7 @@ void Player::Draw() {
 }
 
 void Player::HandleKeyDown(SDL_Event* event) {
-  //std::cerr << "Player::HandleKeyDown() called.\n";
+  // std::cerr << "Player::HandleKeyDown() called.\n";
   if (event->key.keysym.sym == key[0].binding) {         // Go up.
     key[0].is_down = true;
   } else if (event->key.keysym.sym == key[1].binding) {  // Go left.
@@ -57,7 +57,7 @@ void Player::HandleKeyDown(SDL_Event* event) {
 }
 
 void Player::HandleKeyUp(SDL_Event* event) {
-  std::cerr << "Player::HandleKeyUp() called.\n";
+  // std::cerr << "Player::HandleKeyUp() called.\n";
   if (event->key.keysym.sym == key[0].binding) {         // Go up.
     key[0].is_down = false;
   } else if (event->key.keysym.sym == key[1].binding) {  // Go left.
