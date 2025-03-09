@@ -4,7 +4,7 @@
 #include "../level_object.h"
 
 class Saw : public LevelObject {
-  int angle;
+  float angle;
 
  public:
   Saw(SDL_Renderer* renderer, double start_time_, int w, int h, int x, int y);

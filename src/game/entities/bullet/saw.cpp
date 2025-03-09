@@ -2,12 +2,12 @@
 
 Saw::Saw(SDL_Renderer* renderer, double start_time_, int w, int h, int x, int y) {
   LoadImage(renderer, "assets/bullets/saw.png");
-  angle = 0;
+  angle = 0.0;
   SetRect(x, y, w, h);
 }
 
 void Saw::Update(float delta_time, float current_time) {
-  angle += 10;
+  angle += 0.2 * delta_time;
 }
 
 void Saw::Draw(SDL_Renderer* renderer) {
