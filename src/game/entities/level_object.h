@@ -11,10 +11,10 @@ class LevelObject {
   SDL_Texture* texture;
   SDL_Rect rect;  // destination rect to render.
   Vec2d position;
-  int start_time;
+  double start_time;
 
  public:
-  LevelObject(SDL_Renderer* renderer, int start_time_, int w, int h);
+  LevelObject(SDL_Renderer* renderer, double start_time_, int w, int h);
   ~LevelObject();
   void SetRect(int x, int y, int w, int h);
   SDL_Rect GetRect();
