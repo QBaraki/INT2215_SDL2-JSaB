@@ -2,6 +2,7 @@
 
 #include "common.h"
 #include "utils/window_utils.h"
+#include "utils/log_utils.h"
 #include "game/level.h"
 
 #include <stdexcept>
@@ -34,6 +35,7 @@ Game::~Game() {
 void Game::InitGameLoop() {
   bool running = true;
   Level* level = new Level(renderer);
+  // auto logger = LogUtils::thread_status(&status);
   while (running) {
     SDL_Event event;
     auto frame_start_time = std::chrono::high_resolution_clock::now();
