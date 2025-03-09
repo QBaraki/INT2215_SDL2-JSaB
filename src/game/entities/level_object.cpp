@@ -2,10 +2,7 @@
 
 #include <stdexcept>
 
-LevelObject::LevelObject(SDL_Renderer* renderer, double start_time_, int w, int h) {
-  SetRect(0, 0, w, h);
-  start_time = start_time_;
-}
+LevelObject::LevelObject() {}
 
 LevelObject::~LevelObject() {
   SDL_DestroyTexture(texture);
@@ -25,10 +22,14 @@ SDL_Rect LevelObject::GetRect() {
   return rect;
 }
 
+double LevelObject::GetStartTime() {
+  return start_time;
+}
+
 bool LevelObject::LoadImage(SDL_Renderer* renderer, const char* path) {
   texture = IMG_LoadTexture(renderer, path);
   if (texture == nullptr) {
-    throw std::runtime_error("Texture::LoadImage(): Load image " + std::string(path) + " failed!. SDL error: " + IMG_GetError());
+    throw std::runtime_error("LoadImage(): Load image " + std::string(path) + " failed!. SDL error: " + IMG_GetError());
     return false;
   }
   return true;

@@ -14,12 +14,14 @@ class LevelObject {
   double start_time;
 
  public:
-  LevelObject(SDL_Renderer* renderer, double start_time_, int w, int h);
+  LevelObject();
   ~LevelObject();
   void SetRect(int x, int y, int w, int h);
   SDL_Rect GetRect();
+  double GetStartTime();
   bool LoadImage(SDL_Renderer* renderer, const char* path);
-  virtual void Draw() = 0;
+  virtual void Update(float delta_time, [[maybe_unused]] float current_time) = 0;
+  virtual void Draw(SDL_Renderer* renderer) = 0;
 };
 
 #endif  // !LEVEL_OBJECT
