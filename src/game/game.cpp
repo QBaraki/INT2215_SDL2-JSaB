@@ -2,6 +2,7 @@
 
 #include "common.h"
 #include "utils/window_utils.h"
+#include "utils/log_utils.h"
 #include "game/level.h"
 
 #include <stdexcept>
@@ -15,11 +16,12 @@ Game::Game() {
   if (window == nullptr) {
     throw std::runtime_error("Failed to create SDL window. SDL error: " + std::string(SDL_GetError()));
   }
-  renderer = SDL_CreateRenderer(window, -1, 0);
+  renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
   if (renderer == nullptr) {
     throw std::runtime_error("Failed to create SDL renderer window. SDL error: " + std::string(SDL_GetError()));
   }
   WindowUtils::Center(window);
+  Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 }
 
 
@@ -34,6 +36,7 @@ Game::~Game() {
 void Game::InitGameLoop() {
   bool running = true;
   Level* level = new Level(renderer);
+  // auto logger = LogUtils::thread_status(&status);
   while (running) {
     SDL_Event event;
     auto frame_start_time = std::chrono::high_resolution_clock::now();
