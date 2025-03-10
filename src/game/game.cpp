@@ -16,11 +16,12 @@ Game::Game() {
   if (window == nullptr) {
     throw std::runtime_error("Failed to create SDL window. SDL error: " + std::string(SDL_GetError()));
   }
-  renderer = SDL_CreateRenderer(window, -1, 0);
+  renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
   if (renderer == nullptr) {
     throw std::runtime_error("Failed to create SDL renderer window. SDL error: " + std::string(SDL_GetError()));
   }
   WindowUtils::Center(window);
+  Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 }
 
 
