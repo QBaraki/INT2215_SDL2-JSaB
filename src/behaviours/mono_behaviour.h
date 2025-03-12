@@ -4,6 +4,7 @@
 #include <SDL2/SDL_h.>
 
 class MonoBehaviour {
+ protected:
   const SDL_Renderer* renderer;
 
  public:
