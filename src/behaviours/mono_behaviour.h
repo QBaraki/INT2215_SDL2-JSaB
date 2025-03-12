@@ -1,7 +1,7 @@
 #ifndef MONO_BEHAVIOUR_H
 #define MONO_BEHAVIOUR_H
 
-#include <SDL2/SDL_h.>
+#include <SDL2/SDL.h>
 
 class MonoBehaviour {
  protected:
