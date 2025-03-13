@@ -8,3 +8,7 @@ void audio::Init() {
     throw std::runtime_error("Failed to initialize SDL_mixer. Error: " + std::string(Mix_GetError()));
   }
 }
+
+void audio::Destroy() {
+  Mix_Quit();
+}

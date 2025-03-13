@@ -6,6 +6,7 @@
 namespace audio {
 
 void Init();
+void Destroy();
 
 }  // namespace Audio
 
