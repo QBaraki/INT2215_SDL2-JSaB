@@ -14,9 +14,9 @@ class MonoBehaviour {
   virtual void Update();
   virtual void FixedUpdate();
   virtual void Render();
-  virtual void EventHandler(SDL_event& event);
-  virtual void OnKeyUp(SDL_event& event);
-  virtual void OnKeyDown(SDL_event& event);
+  virtual void EventHandler(SDL_Event& event);
+  virtual void OnKeyUp(SDL_Event& event);
+  virtual void OnKeyDown(SDL_Event& event);
 };
 
 #endif  //!MONO_BEHAVIOUR_H

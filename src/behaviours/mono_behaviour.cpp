@@ -8,10 +8,15 @@ MonoBehaviour::MonoBehaviour(const SDL_Renderer* renderer_) : renderer(renderer_
   }
 }
 
-~MonoBehaviour() {
-}
+MonoBehaviour::~MonoBehaviour() {}
 
-void MonoBehaviour(SDL_Event& event) {
+void MonoBehaviour::Update() {}
+
+void MonoBehaviour::FixedUpdate() {}
+
+void MonoBehaviour::Render() {}
+
+void MonoBehaviour::EventHandler(SDL_Event& event) {
   switch (event.type) {
     case SDL_KEYUP:
       OnKeyUp(event);
@@ -21,3 +26,7 @@ void MonoBehaviour(SDL_Event& event) {
       break;
   }
 }
+
+void MonoBehaviour::OnKeyUp(SDL_Event& event) {}
+
+void MonoBehaviour::OnKeyDown(SDL_Event& event) {}
