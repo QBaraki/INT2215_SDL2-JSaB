@@ -30,7 +30,7 @@ class Player : public MonoBehaviour {
   Player(SDL_Renderer* renderer_, int size_, int x_, int y_);
   ~Player();
   void Update() override;
-  void FixedUpdate() override;
+  //void FixedUpdate() override;
   void Render() override;
   void OnKeyUp(SDL_Event& event) override;
   void OnKeyDown(SDL_Event& event) override;

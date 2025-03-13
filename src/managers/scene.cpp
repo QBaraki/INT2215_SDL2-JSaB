@@ -19,12 +19,12 @@ void my_scene::Update() {
   stack.top()->Update();
 }
 
-void my_scene::FixedUpdate() {
-  if (stack.empty()) {
-    return;
-  }
-  stack.top()->FixedUpdate();
-}
+//void my_scene::FixedUpdate() {
+//  if (stack.empty()) {
+//    return;
+//  }
+//  stack.top()->FixedUpdate();
+//}
 
 void my_scene::Render() {
   if (stack.empty()) {

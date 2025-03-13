@@ -48,9 +48,6 @@ void Player::Update() {
   if (position.y + size + padding > WINDOW_HEIGHT) {
     position.y = WINDOW_HEIGHT - size - padding;
   }
-}
-
-void Player::FixedUpdate() {
   // Rotate player.
   float destination_angle;
   if (velocity.x < 0) {
