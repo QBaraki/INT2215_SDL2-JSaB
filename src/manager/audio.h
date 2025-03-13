@@ -8,6 +8,6 @@ namespace my_audio {
 void Init();
 void Destroy();
 
-}  // namespace Audio
+}  // namespace my_audio
 
 #endif  // !AUDIO_H
