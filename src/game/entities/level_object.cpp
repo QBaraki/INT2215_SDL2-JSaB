@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-LevelObject::LevelObject() {}
+LevelObject::LevelObject(SDL_Renderer* renderer_) : MonoBehaviour(renderer_) {}
 
 LevelObject::~LevelObject() {
   SDL_DestroyTexture(texture);

@@ -1,7 +1,7 @@
 #ifndef SAW_H
 #define SAW_H
 
-#include "../level_object.h"
+#include "game/entities/level_object.h"
 #include "geometry/vec2d.h"
 
 class Saw : public LevelObject {
@@ -12,7 +12,7 @@ class Saw : public LevelObject {
  public:
   Saw(SDL_Renderer* renderer, double start_time_, int w, int h, int x, int y, Vec2d velocity_);
   void Update(float delta_time, [[maybe_unused]] float current_time);
-  void Draw(SDL_Renderer* renderer);
+  void Render();
 };
 
 #endif  // !SAW_H

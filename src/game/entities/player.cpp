@@ -61,6 +61,9 @@ void Player::Update() {
     destination_angle += (velocity.x > 0 ? 45.0 : (velocity.x < 0 ? -45.0 : 90.0));
   }
   if (angle != destination_angle) {
+    if (destination_angle == 360.0) {
+      destination_angle = 0.0;
+    }
     float diff = destination_angle - angle;
     if (diff > 180.0) {
       diff -= 360.0;
@@ -78,7 +81,6 @@ void Player::Update() {
 void Player::Render() {
   rect.x = static_cast<int>(position.x);
   rect.y = static_cast<int>(position.y);
-  //std::cerr << rect.x << ' ' << rect.y << '\n';
   SDL_RenderCopyEx(renderer, texture, nullptr, &rect, angle, nullptr, SDL_FLIP_NONE);
 }
 
@@ -91,7 +93,7 @@ void Player::OnKeyUp(SDL_Event& event) {
   if (direction_map.count(event.key.keysym.scancode)) {
     velocity -= direction_map[event.key.keysym.scancode];
   }
-  std::cerr << "Player::velocity: " << velocity.x << ' ' << velocity.y << '\n';
+  //std::cerr << "Player::velocity: " << velocity.x << ' ' << velocity.y << '\n';
 }
 
 void Player::OnKeyDown(SDL_Event& event) {
@@ -103,5 +105,5 @@ void Player::OnKeyDown(SDL_Event& event) {
   if (direction_map.count(event.key.keysym.scancode)) {
     velocity += direction_map[event.key.keysym.scancode];
   }
-  std::cerr << "Player::velocity: " << velocity.x << ' ' << velocity.y << '\n';
+  //std::cerr << "Player::velocity: " << velocity.x << ' ' << velocity.y << '\n';
 }

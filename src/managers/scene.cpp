@@ -39,3 +39,10 @@ void my_scene::EventHandler(SDL_Event& event) {
   }
   stack.top()->EventHandler(event);
 }
+
+void my_scene::Free() {
+  while (!stack.empty()) {
+    delete stack.top();
+    stack.pop();
+  }
+}

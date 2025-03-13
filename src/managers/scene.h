@@ -18,6 +18,7 @@ void Update();
 //void FixedUpdate();
 void Render();
 void EventHandler(SDL_Event& event);
+void Free();
 
 }  // namespace my_scene
 

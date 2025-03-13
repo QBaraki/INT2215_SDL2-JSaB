@@ -7,7 +7,7 @@
 
 #include "utils/window_utils.h"
 #include "utils/log_utils.h"
-#include "game/level.h"
+#include "game/scenes/level.h"
 
 #include <iostream>
 #include <stdexcept>
@@ -44,6 +44,7 @@ Game::~Game() {
   renderer = nullptr;
   my_audio::Destroy();
   SDL_Quit();
+  my_scene::Free();
 }
 
 void Game::InitGameLoop() {
