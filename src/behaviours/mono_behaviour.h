@@ -5,10 +5,10 @@
 
 class MonoBehaviour {
  protected:
-  const SDL_Renderer* renderer;
+  SDL_Renderer* const renderer;
 
  public:
-  MonoBehaviour(const SDL_Renderer* renderer_);
+  MonoBehaviour(SDL_Renderer* const renderer_);
   ~MonoBehaviour();
 
   virtual void Update();
