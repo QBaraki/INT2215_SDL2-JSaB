@@ -25,7 +25,7 @@ Game::Game() {
     throw std::runtime_error("Failed to create SDL renderer window. SDL error: " + std::string(SDL_GetError()));
   }
   WindowUtils::Center(window);
-  audio::Init();
+  my_audio::Init();
   level = nullptr;
   running = true;
 }
@@ -36,6 +36,7 @@ Game::~Game() {
   window = nullptr;
   SDL_DestroyRenderer(renderer);
   renderer = nullptr;
+  my_audio::Destroy();
   SDL_Quit();
 }
 
@@ -56,6 +57,7 @@ void Game::InitGameLoop() {
     });
 
   level = new Level(renderer);
+
   // auto logger = LogUtils::thread_status(&status);
   float frame_time = 1000.0f / MAX_FPS;
   while (running) {

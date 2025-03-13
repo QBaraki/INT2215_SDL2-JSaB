@@ -3,7 +3,7 @@
 
 #include <SDL2/SDL_mixer.h>
 
-namespace audio {
+namespace my_audio {
 
 void Init();
 void Destroy();
