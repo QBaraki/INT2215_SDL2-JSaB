@@ -33,7 +33,7 @@ Game::Game() {
   //level = nullptr;
   running = true;
 
-  my_scene::stack.emplace(new Player(renderer, 22, 200, WINDOW_HEIGHT / 2 - 11));
+  my_scene::stack.emplace(new Level(renderer));
 }
 
 
