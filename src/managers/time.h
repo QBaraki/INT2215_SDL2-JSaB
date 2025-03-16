@@ -8,4 +8,4 @@ inline float fixed_delta_time = 1.0f;
 
 }
 
-#endif  //!TIME_H
+#endif  // !TIME_H

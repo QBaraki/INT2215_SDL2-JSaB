@@ -2,11 +2,12 @@
 
 #include "managers/time.h"
 
-Saw::Saw(SDL_Renderer* renderer_, double start_time_, int w, int h, int x, int y, Vec2d velocity_) : LevelObject(renderer_) {
+Saw::Saw(SDL_Renderer* renderer_, double start_time_, int size_, int x, int y, Vec2d velocity_) : LevelObject(renderer_) {
   LoadImage(renderer, "assets/bullets/saw.png");
   angle = 0.0;
+  size = size_;
   position = Vec2d(x, y);
-  SetRect(x, y, w, h);
+  SetRect(x, y, size, size);
   velocity = velocity_;
 }
 
