@@ -1,27 +1,39 @@
 #include "game.h"
 
 #include "common.h"
+#include "managers/audio.h"
+#include "managers/scene.h"
+#include "managers/time.h"
+
 #include "utils/window_utils.h"
 #include "utils/log_utils.h"
-#include "game/level.h"
+#include "game/scenes/level.h"
 
+#include <iostream>
 #include <stdexcept>
+#include <thread>
 #include <chrono>
 
 Game::Game() {
   if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
     throw std::runtime_error("Failed to initialize SDL. SDL error: " + std::string(SDL_GetError()));
   }
-  window = SDL_CreateWindow("Ponging", 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
+  window = SDL_CreateWindow("Just Shapes and Beats: SDL2 clone version", 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
   if (window == nullptr) {
     throw std::runtime_error("Failed to create SDL window. SDL error: " + std::string(SDL_GetError()));
   }
-  renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+  std::cerr << "Window created!\n";
+  renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
   if (renderer == nullptr) {
     throw std::runtime_error("Failed to create SDL renderer window. SDL error: " + std::string(SDL_GetError()));
   }
+  std::cerr << "Renderer created!\n";
   WindowUtils::Center(window);
-  Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+  my_audio::Init();
+  //level = nullptr;
+  running = true;
+
+  my_scene::stack.emplace(new Level(renderer));
 }
 
 
@@ -30,29 +42,79 @@ Game::~Game() {
   window = nullptr;
   SDL_DestroyRenderer(renderer);
   renderer = nullptr;
+  my_audio::Destroy();
   SDL_Quit();
+  my_scene::Free();
 }
 
 void Game::InitGameLoop() {
-  bool running = true;
-  Level* level = new Level(renderer);
+  // Start a new thread to do FixedUpdate()
+  //std::thread fixed_update_thread([&](void) {
+  //    std::cerr << "Thread spawned\n";
+  //    while (running) {
+  //      auto frame_start_time = std::chrono::high_resolution_clock::now();
+  //      FixedUpdate();
+  //      auto frame_stop_time = std::chrono::high_resolution_clock::now();
+  //      my_time::delta_time = std::chrono::duration<float, std::chrono::milliseconds::period>(frame_stop_time - frame_start_time).count();
+  //      if (FIXED_UPDATE_TIME_STEP > my_time::delta_time) {
+  //        std::this_thread::sleep_for(std::chrono::milliseconds(FIXED_UPDATE_TIME_STEP - (int)my_time::fixed_delta_time));
+  //        frame_stop_time = std::chrono::high_resolution_clock::now();
+  //        my_time::delta_time = std::chrono::duration<float, std::chrono::milliseconds::period>(frame_stop_time - frame_start_time).count();
+  //      }
+  //    }
+  //  });
+
+  // level = new Level(renderer);
+
   // auto logger = LogUtils::thread_status(&status);
+  //float frame_time = 1000.0f / MAX_FPS;
   while (running) {
     SDL_Event event;
     auto frame_start_time = std::chrono::high_resolution_clock::now();
     while (SDL_PollEvent(&event)) {
-      if (event.type == SDL_QUIT) {
-        running = false;
-      }
-      level->InputHandler(&event);
+      EventHandler(event);
     }
-    SDL_SetRenderDrawColor(renderer, 0x0, 0x0, 0x0, 255);
-    SDL_RenderClear(renderer);
-    
-    level->RenderLevel(status.delta_time);
 
-    SDL_RenderPresent(renderer);
+    Update();
+    Render();
+
     auto frame_stop_time = std::chrono::high_resolution_clock::now();
-    status.delta_time = std::chrono::duration<float, std::chrono::milliseconds::period>(frame_stop_time - frame_start_time).count();
+
+    my_time::delta_time = std::chrono::duration<float, std::chrono::milliseconds::period>(frame_stop_time - frame_start_time).count();
+    //if (frame_time > my_time::delta_time) {
+    //  SDL_Delay(uint32_t(frame_time - my_time::delta_time));
+    //  frame_stop_time = std::chrono::high_resolution_clock::now();
+    //  my_time::delta_time = std::chrono::duration<float, std::chrono::milliseconds::period>(frame_stop_time - frame_start_time).count();
+    //}
   }
+  //fixed_update_thread.join();
+}
+
+void Game::StopGameLoop() {
+  running = false;
+}
+
+void Game::EventHandler(SDL_Event& event) {
+  if (event.type == SDL_QUIT) {
+    running = false;
+  }
+  my_scene::EventHandler(event);
+}
+
+void Game::Update() {
+  my_scene::Update();
+}
+
+//void Game::FixedUpdate() {
+//  my_scene::FixedUpdate();
+//}
+
+void Game::Render() {
+  SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+  SDL_RenderClear(renderer);
+
+  //level->RenderLevel(my_time::delta_time);
+  my_scene::Render();
+
+  SDL_RenderPresent(renderer);
 }

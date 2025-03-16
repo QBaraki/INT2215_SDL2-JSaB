@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
+set(CMAKE_CXX_STANDARD 17)
 project(SDL2_JSaB VERSION 0.1.0)
 
 set(CMAKE_GENERATOR "MinGW Makefiles" CACHE STRING "Generator for CMake")
