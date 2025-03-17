@@ -48,6 +48,7 @@ void Level::Update() {
   }
   for (auto it : target) {
     std::cout << "Level::Update(): Deleted object with address " << (*it) << ".\n";
+    delete *it;
     onscreen_objects.erase(it);
   }
 
