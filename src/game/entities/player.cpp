@@ -16,7 +16,7 @@ Player::Player(SDL_Renderer* renderer_, int size_, int x_, int y_)
   if (!texture) {
     throw std::runtime_error("Texture creation failed! SDL error: " + std::string(SDL_GetError()));
   }
-  std::cerr << "Player::Player(): Player loaded\n";
+  std::cout << "Player::Player(): Player loaded\n";
   SDL_Rect r = {0, 0, size, size};
   SDL_SetRenderTarget(renderer, texture);
   SDL_SetRenderDrawColor(renderer, 0x00, 0xFF, 0xFF, 0xFF);
@@ -88,7 +88,7 @@ void Player::OnKeyUp(SDL_Event& event) {
   if (event.key.repeat) {
     return;
   }
-  std::cerr << "Called Player::OnKeyUp()\n";
+  //std::cerr << "Called Player::OnKeyUp()\n";
   key[event.key.keysym.scancode] = false;
   if (direction_map.count(event.key.keysym.scancode)) {
     velocity -= direction_map[event.key.keysym.scancode];
@@ -100,7 +100,7 @@ void Player::OnKeyDown(SDL_Event& event) {
   if (event.key.repeat) {
     return;
   }
-  std::cerr << "Called Player::OnKeyDown()\n";
+  //std::cerr << "Called Player::OnKeyDown()\n";
   key[event.key.keysym.scancode] = true;
   if (direction_map.count(event.key.keysym.scancode)) {
     velocity += direction_map[event.key.keysym.scancode];

@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
 
+#include <list>
 #include <vector>
 
 #include "behaviours/mono_behaviour.h"
@@ -13,8 +14,10 @@
 class Level : public MonoBehaviour {
   Player* player;
   bool level_loaded;
-  std::vector<LevelObject*> objects;
-  Mix_Music* music_player;
+  std::size_t objects_count, current_index;
+  std::list<LevelObject*> onscreen_objects;
+  std::vector<LevelObject*> loaded_objects;
+  Mix_Music* music;
 
  public:
   Level(SDL_Renderer* renderer_);

@@ -14,6 +14,7 @@ class Saw : public LevelObject {
   Saw(SDL_Renderer* renderer, double start_time_, int size_, int x, int y, Vec2d velocity_);
   void Update() override;
   void Render() override;
+  LevelObject* Clone() override;
 };
 
 #endif  // !SAW_H

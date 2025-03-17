@@ -6,6 +6,7 @@ Saw::Saw(SDL_Renderer* renderer_, double start_time_, int size_, int x, int y, V
   LoadImage(renderer, "assets/bullets/saw.png");
   angle = 0.0;
   size = size_;
+  start_time = start_time_;
   position = Vec2d(x, y);
   SetRect(x, y, size, size);
   velocity = velocity_;
@@ -23,4 +24,8 @@ void Saw::Update() {
 
 void Saw::Render() {
   SDL_RenderCopyEx(renderer, texture, nullptr, &rect, angle, nullptr, SDL_FLIP_NONE);
+}
+
+LevelObject* Saw::Clone() {
+  return new Saw(*this);
 }
