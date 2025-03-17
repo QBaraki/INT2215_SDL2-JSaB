@@ -38,13 +38,26 @@ void Level::Update() {
     }
   }
   player->Update();
+
+  // Check for "out-of-screen" objects
+  std::vector<std::list<LevelObject*>::iterator> target;
+  for (std::list<LevelObject*>::iterator it = onscreen_objects.begin(); it != onscreen_objects.end(); it++) {
+    if ((*it)->IsOutOfScreen()) {
+      target.push_back(it);
+    }
+  }
+  for (auto it : target) {
+    std::cout << "Level::Update(): Deleted object with address " << (*it) << ".\n";
+    onscreen_objects.erase(it);
+  }
+
   // Check for pending objects
   double current_time = Mix_GetMusicPosition(music);
-  while (current_index < objects_count && loaded_objects[current_index]->start_time <= current_time) {
-    std::cout << "Level::Update(): Created object from address " << loaded_objects[current_index] << ".\n";
-    std::cerr << "Time: " << loaded_objects[current_index]->start_time << ' ' << current_time << '\n';
+  while (current_index < objects_count && loaded_objects[current_index]->GetStartTime() <= current_time) {
     LevelObject* new_object = loaded_objects[current_index]->Clone();
     onscreen_objects.push_back(new_object);
+    std::cout << "Level::Update(): Created object from address " << loaded_objects[current_index] << " to " << new_object << ".\n";
+    std::cerr << "Time: " << loaded_objects[current_index]->GetStartTime() << ' ' << current_time << '\n';
     current_index++;
   }
 
@@ -55,7 +68,7 @@ void Level::Update() {
 }
 
 void Level::Render() {
-  if (!onscreen_objects.empty()) {
+  if (!onscreen_objects.empty()) {  // this is just for easier debugging purposes
     for (LevelObject* o : onscreen_objects) {
       o->Render();
     }

@@ -9,12 +9,12 @@
 
 class LevelObject : public MonoBehaviour {
  protected:
+  double start_time;
   SDL_Texture* texture;
   SDL_Rect rect;  // destination rect to render.
   Vec2d position;
 
  public:
-  double start_time;
 
   LevelObject(SDL_Renderer* renderer_);
   ~LevelObject();
@@ -22,6 +22,7 @@ class LevelObject : public MonoBehaviour {
   SDL_Rect GetRect();
   double GetStartTime();
   bool LoadImage(SDL_Renderer* renderer, const char* path);
+  virtual bool IsOutOfScreen() = 0;
   virtual LevelObject* Clone() = 0;
 };
 

@@ -1,5 +1,6 @@
 #include "saw.h"
 
+#include "common.h"
 #include "managers/time.h"
 
 Saw::Saw(SDL_Renderer* renderer_, double start_time_, int size_, int x, int y, Vec2d velocity_) : LevelObject(renderer_) {
@@ -24,6 +25,19 @@ void Saw::Update() {
 
 void Saw::Render() {
   SDL_RenderCopyEx(renderer, texture, nullptr, &rect, angle, nullptr, SDL_FLIP_NONE);
+}
+
+// This function should return "true" if:
+// - Out of screen dimension
+// - Not needed anymore
+bool Saw::IsOutOfScreen() {
+  if (position.x > WINDOW_WIDTH) {
+    return true;
+  }
+  if (position.y > WINDOW_HEIGHT) {
+    return true;
+  }
+  return (position.x + size < 0 || position.y + size < 0);
 }
 
 LevelObject* Saw::Clone() {
