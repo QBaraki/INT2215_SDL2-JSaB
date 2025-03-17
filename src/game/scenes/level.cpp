@@ -39,15 +39,15 @@ void Level::Update() {
   }
   player->Update();
 
-  // Check for "out-of-screen" objects
+  // Check for "out-of-screen" objects and delete them
   std::vector<std::list<LevelObject*>::iterator> target;
   for (std::list<LevelObject*>::iterator it = onscreen_objects.begin(); it != onscreen_objects.end(); it++) {
     if ((*it)->IsOutOfScreen()) {
       target.push_back(it);
     }
   }
-  for (auto it : target) {
-    std::cout << "Level::Update(): Deleted object with address " << (*it) << ".\n";
+  for (auto& it : target) {
+    std::cout << "Level::Update(): Deleted object with address " << (*it) << '\n';
     delete *it;
     onscreen_objects.erase(it);
   }
@@ -57,7 +57,7 @@ void Level::Update() {
   while (current_index < objects_count && loaded_objects[current_index]->GetStartTime() <= current_time) {
     LevelObject* new_object = loaded_objects[current_index]->Clone();
     onscreen_objects.push_back(new_object);
-    std::cout << "Level::Update(): Created object from address " << loaded_objects[current_index] << " to " << new_object << ".\n";
+    std::cout << "Level::Update(): Created object from address " << loaded_objects[current_index] << " to " << new_object << '\n';
     std::cerr << "Time: " << loaded_objects[current_index]->GetStartTime() << ' ' << current_time << '\n';
     current_index++;
   }

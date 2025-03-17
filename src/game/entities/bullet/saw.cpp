@@ -27,9 +27,6 @@ void Saw::Render() {
   SDL_RenderCopyEx(renderer, texture, nullptr, &rect, angle, nullptr, SDL_FLIP_NONE);
 }
 
-// This function should return "true" if:
-// - Out of screen dimension
-// - Not needed anymore
 bool Saw::IsOutOfScreen() {
   if (position.x > WINDOW_WIDTH) {
     return true;

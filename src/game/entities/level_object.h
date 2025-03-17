@@ -22,7 +22,15 @@ class LevelObject : public MonoBehaviour {
   SDL_Rect GetRect();
   double GetStartTime();
   bool LoadImage(SDL_Renderer* renderer, const char* path);
+
+  /**
+    This function should return `true` if:
+    - Out of screen dimension
+    - Not needed anymore
+   */
   virtual bool IsOutOfScreen() = 0;
+
+  // Make a copy of the object in a new address
   virtual LevelObject* Clone() = 0;
 };
 
