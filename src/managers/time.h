@@ -3,8 +3,8 @@
 
 namespace my_time {
 
-inline float delta_time = 1.0f;
-inline float fixed_delta_time = 1.0f;
+inline double delta_time = 1.0f;
+inline double fixed_delta_time = 1.0f;
 
 }
 

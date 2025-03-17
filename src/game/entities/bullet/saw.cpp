@@ -5,7 +5,7 @@
 
 Saw::Saw(SDL_Renderer* renderer_, double start_time_, int size_, int x, int y, Vec2d velocity_) : LevelObject(renderer_) {
   LoadImage(renderer, "assets/bullets/saw.png");
-  angle = 0.0;
+  angle = 0.0f;
   size = size_;
   start_time = start_time_;
   position = Vec2d(x, y);
@@ -14,7 +14,7 @@ Saw::Saw(SDL_Renderer* renderer_, double start_time_, int size_, int x, int y, V
 }
 
 void Saw::Update() {
-  angle -= 0.2 * my_time::delta_time;
+  angle -= 0.2f * my_time::delta_time;
   if (angle < 0.0) {
     angle += 360.0;
   }
@@ -33,7 +33,7 @@ bool Saw::IsCollided(Player* target) {
   Vec2d saw_mid = Vec2d(position.x + saw_radius, position.y + saw_radius);
   Vec2d player_mid = Vec2d(target->position.x + player_radius, target->position.y + player_radius);
   Vec2d diff = player_mid - saw_mid;
-  int d = (diff.x * diff.x) + (diff.y * diff.y);
+  int d = int((diff.x * diff.x) + (diff.y * diff.y));
   int r = player_radius + saw_radius;
   return d <= (r * r);
 }

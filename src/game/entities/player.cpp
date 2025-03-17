@@ -49,7 +49,7 @@ void Player::Update() {
     position.y = WINDOW_HEIGHT - size - padding;
   }
   // Rotate player.
-  float destination_angle;
+  double destination_angle;
   if (velocity.x < 0) {
     destination_angle = 270.0;
   } else {
@@ -64,7 +64,7 @@ void Player::Update() {
     if (destination_angle == 360.0) {
       destination_angle = 0.0;
     }
-    float diff = destination_angle - angle;
+    double diff = destination_angle - angle;
     if (diff > 180.0) {
       diff -= 360.0;
     } else if (diff <= -180.0) {

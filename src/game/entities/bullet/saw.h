@@ -6,7 +6,7 @@
 
 class Saw : public LevelObject {
   int size;
-  float angle;
+  double angle;
   Vec2d position;
   Vec2d velocity;
 
