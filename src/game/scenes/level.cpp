@@ -66,7 +66,7 @@ void Level::Update() {
   for (LevelObject* o : onscreen_objects) {
     o->Update();
     if (o->IsCollided(player)) {
-      std::cerr << "Level::Update(): Object with address " << o << " collided !\n ";
+      std::cerr << "Level::Update(): Player collided with object from address " << o << '\n';
     }
   }
 }
