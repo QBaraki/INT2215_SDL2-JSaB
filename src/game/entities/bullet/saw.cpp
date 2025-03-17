@@ -27,6 +27,17 @@ void Saw::Render() {
   SDL_RenderCopyEx(renderer, texture, nullptr, &rect, angle, nullptr, SDL_FLIP_NONE);
 }
 
+bool Saw::IsCollided(Player* target) {
+  int player_radius = target->GetSize() / 2;
+  int saw_radius = size / 2 - 2;
+  Vec2d saw_mid = Vec2d(position.x + saw_radius, position.y + saw_radius);
+  Vec2d player_mid = Vec2d(target->position.x + player_radius, target->position.y + player_radius);
+  Vec2d diff = player_mid - saw_mid;
+  int d = (diff.x * diff.x) + (diff.y * diff.y);
+  int r = player_radius + saw_radius;
+  return d <= (r * r);
+}
+
 bool Saw::IsOutOfScreen() {
   if (position.x > WINDOW_WIDTH) {
     return true;

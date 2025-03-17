@@ -34,3 +34,11 @@ bool LevelObject::LoadImage(SDL_Renderer* renderer, const char* path) {
   }
   return true;
 }
+
+bool LevelObject::IsDetroyed() {
+  return false;
+}
+
+std::vector<LevelObject*> LevelObject::Spawn() {
+  return std::vector<LevelObject*>();
+}

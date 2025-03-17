@@ -84,6 +84,10 @@ void Player::Render() {
   SDL_RenderCopyEx(renderer, texture, nullptr, &rect, angle, nullptr, SDL_FLIP_NONE);
 }
 
+int Player::GetSize() {
+  return size;
+}
+
 void Player::OnKeyUp(SDL_Event& event) {
   if (event.key.repeat) {
     return;
