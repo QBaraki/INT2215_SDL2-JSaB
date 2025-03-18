@@ -62,7 +62,7 @@ void Level::Update() {
     LevelObject* new_object = loaded_objects[current_index]->Clone();
     onscreen_objects.push_back(new_object);
     std::cout << "Level::Update(): Created object from address " << loaded_objects[current_index] << " to " << new_object << '\n';
-    std::cerr << "Time: " << loaded_objects[current_index]->GetStartTime() << ' ' << current_duration << '\n';
+    //std::cerr << "Time: " << loaded_objects[current_index]->GetStartTime() << ' ' << current_duration << '\n';
     current_index++;
   }
   previous_duration = current_duration;
