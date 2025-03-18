@@ -28,6 +28,14 @@ bool LoadLevel(SDL_Renderer* renderer, std::vector<LevelObject*> &object, Mix_Mu
   object.push_back(new Saw(renderer, 6.40, 50, 1260, 500, {-0.22, 0}));
   object.push_back(new Saw(renderer, 6.72, 50, 1260, 140, {-0.22, 0}));
 
+  // Validate objects
+  for (std::size_t i = 1; i < (int)object.size(); ++i) {
+    if (object[i]->GetStartTime() < object[i - 1]->GetStartTime()) {
+      std::cout << "Playground::LoadLevel(): Level failed to load as the object is NOT sorted!\n";
+      return false;
+    }
+  }
+
   // Load music
   music_player = Mix_LoadMUS("assets/musics/00_playground/mus_corrupted_section_01.ogg");
   if (music_player == nullptr) {
