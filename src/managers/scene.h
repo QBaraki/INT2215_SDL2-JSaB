@@ -7,7 +7,7 @@
 
 #include "behaviours/mono_behaviour.h"
 
-namespace my_scene {
+namespace mScene {
 
 inline SDL_Renderer* renderer = nullptr;
 inline std::stack<MonoBehaviour*> stack;

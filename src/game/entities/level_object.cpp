@@ -5,7 +5,6 @@
 LevelObject::LevelObject(SDL_Renderer* renderer_) : MonoBehaviour(renderer_) {}
 
 LevelObject::~LevelObject() {
-  SDL_DestroyTexture(texture);
   texture = nullptr;
 }
 
@@ -24,15 +23,6 @@ SDL_Rect LevelObject::GetRect() {
 
 double LevelObject::GetStartTime() {
   return start_time;
-}
-
-bool LevelObject::LoadImage(SDL_Renderer* renderer, const char* path) {
-  texture = IMG_LoadTexture(renderer, path);
-  if (texture == nullptr) {
-    throw std::runtime_error("LoadImage(): Load image " + std::string(path) + " failed!. SDL error: " + IMG_GetError());
-    return false;
-  }
-  return true;
 }
 
 bool LevelObject::IsDetroyed() {

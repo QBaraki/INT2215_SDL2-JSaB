@@ -24,7 +24,6 @@ class LevelObject : public MonoBehaviour {
   void SetRect(int x, int y, int w, int h);
   SDL_Rect GetRect();
   double GetStartTime();
-  bool LoadImage(SDL_Renderer* renderer, const char* path);
 
   // This function should return `true` when collide with the player
   virtual bool IsCollided(Player* target) = 0;

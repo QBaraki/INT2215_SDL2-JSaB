@@ -2,9 +2,10 @@
 
 #include "common.h"
 #include "managers/time.h"
+#include "managers/texture.h"
 
 Saw::Saw(SDL_Renderer* renderer_, double start_time_, int size_, int x, int y, Vec2d velocity_) : LevelObject(renderer_) {
-  LoadImage(renderer, "assets/bullets/saw.png");
+  texture = mTexture::LoadImage(renderer, "assets/bullets/saw.png");
   angle = 0.0f;
   size = size_;
   start_time = start_time_;
@@ -14,11 +15,11 @@ Saw::Saw(SDL_Renderer* renderer_, double start_time_, int size_, int x, int y, V
 }
 
 void Saw::Update() {
-  angle -= 0.2f * my_time::delta_time;
+  angle -= 0.2f * mTime::delta_time;
   if (angle < 0.0) {
     angle += 360.0;
   }
-  position += velocity * my_time::delta_time;
+  position += velocity * mTime::delta_time;
   rect.x = static_cast<int>(position.x);
   rect.y = static_cast<int>(position.y);
 }

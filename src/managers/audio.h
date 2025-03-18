@@ -3,11 +3,11 @@
 
 #include <SDL2/SDL_mixer.h>
 
-namespace my_audio {
+namespace mAudio {
 
 void Init();
 void Destroy();
 
-}  // namespace my_audio
+}  // namespace mAudio
 
 #endif  // !AUDIO_H
