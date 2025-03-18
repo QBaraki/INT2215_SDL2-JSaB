@@ -29,11 +29,11 @@ Game::Game() {
   }
   std::cerr << "Renderer created!\n";
   WindowUtils::Center(window);
-  my_audio::Init();
+  mAudio::Init();
   //level = nullptr;
   running = true;
 
-  my_scene::stack.emplace(new Level(renderer));
+  mScene::stack.emplace(new Level(renderer));
 }
 
 
@@ -42,9 +42,9 @@ Game::~Game() {
   window = nullptr;
   SDL_DestroyRenderer(renderer);
   renderer = nullptr;
-  my_audio::Destroy();
+  mAudio::Destroy();
   SDL_Quit();
-  my_scene::Free();
+  mScene::Free();
 }
 
 void Game::InitGameLoop() {
@@ -59,7 +59,7 @@ void Game::InitGameLoop() {
   //      if (FIXED_UPDATE_TIME_STEP > my_time::delta_time) {
   //        std::this_thread::sleep_for(std::chrono::milliseconds(FIXED_UPDATE_TIME_STEP - (int)my_time::fixed_delta_time));
   //        frame_stop_time = std::chrono::high_resolution_clock::now();
-  //        my_time::delta_time = std::chrono::duration<float, std::chrono::milliseconds::period>(frame_stop_time - frame_start_time).count();
+  //        mTime::delta_time = std::chrono::duration<float, std::chrono::milliseconds::period>(frame_stop_time - frame_start_time).count();
   //      }
   //    }
   //  });
@@ -80,11 +80,11 @@ void Game::InitGameLoop() {
 
     auto frame_stop_time = std::chrono::high_resolution_clock::now();
 
-    my_time::delta_time = std::chrono::duration<float, std::chrono::milliseconds::period>(frame_stop_time - frame_start_time).count();
-    //if (frame_time > my_time::delta_time) {
-    //  SDL_Delay(uint32_t(frame_time - my_time::delta_time));
+    mTime::delta_time = std::chrono::duration<float, std::chrono::milliseconds::period>(frame_stop_time - frame_start_time).count();
+    //if (frame_time > mTime::delta_time) {
+    //  SDL_Delay(uint32_t(frame_time - mTime::delta_time));
     //  frame_stop_time = std::chrono::high_resolution_clock::now();
-    //  my_time::delta_time = std::chrono::duration<float, std::chrono::milliseconds::period>(frame_stop_time - frame_start_time).count();
+    //  mTime::delta_time = std::chrono::duration<float, std::chrono::milliseconds::period>(frame_stop_time - frame_start_time).count();
     //}
   }
   //fixed_update_thread.join();
@@ -98,23 +98,23 @@ void Game::EventHandler(SDL_Event& event) {
   if (event.type == SDL_QUIT) {
     running = false;
   }
-  my_scene::EventHandler(event);
+  mScene::EventHandler(event);
 }
 
 void Game::Update() {
-  my_scene::Update();
+  mScene::Update();
 }
 
 //void Game::FixedUpdate() {
-//  my_scene::FixedUpdate();
+//  mScene::FixedUpdate();
 //}
 
 void Game::Render() {
   SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
   SDL_RenderClear(renderer);
 
-  //level->RenderLevel(my_time::delta_time);
-  my_scene::Render();
+  //level->RenderLevel(mTime::delta_time);
+  mScene::Render();
 
   SDL_RenderPresent(renderer);
 }

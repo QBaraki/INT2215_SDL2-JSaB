@@ -31,9 +31,9 @@ Player::~Player() {
 void Player::Update() {
   // Update position
   if (velocity.x && velocity.y) {
-    position += velocity * my_time::delta_time * 0.86602540378f;
+    position += velocity * mTime::delta_time * 0.86602540378f;
   } else {
-    position += velocity * my_time::delta_time;
+    position += velocity * mTime::delta_time;
   }
   int padding = 8;
   if (position.x < padding) {

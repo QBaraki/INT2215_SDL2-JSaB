@@ -1,10 +1,10 @@
 #include "scene.h"
 
-void my_scene::Init(SDL_Renderer* renderer_) {
+void mScene::Init(SDL_Renderer* renderer_) {
   renderer = renderer_;
 }
 
-void my_scene::Pop() {
+void mScene::Pop() {
   if (stack.empty()) {
     return;
   }
@@ -12,35 +12,35 @@ void my_scene::Pop() {
   stack.pop();
 }
 
-void my_scene::Update() {
+void mScene::Update() {
   if (stack.empty()) {
     return;
   }
   stack.top()->Update();
 }
 
-//void my_scene::FixedUpdate() {
+//void mScene::FixedUpdate() {
 //  if (stack.empty()) {
 //    return;
 //  }
 //  stack.top()->FixedUpdate();
 //}
 
-void my_scene::Render() {
+void mScene::Render() {
   if (stack.empty()) {
     return;
   }
   stack.top()->Render();
 }
 
-void my_scene::EventHandler(SDL_Event& event) {
+void mScene::EventHandler(SDL_Event& event) {
   if (stack.empty()) {
     return;
   }
   stack.top()->EventHandler(event);
 }
 
-void my_scene::Free() {
+void mScene::Free() {
   while (!stack.empty()) {
     delete stack.top();
     stack.pop();

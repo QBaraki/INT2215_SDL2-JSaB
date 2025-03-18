@@ -14,11 +14,11 @@ Saw::Saw(SDL_Renderer* renderer_, double start_time_, int size_, int x, int y, V
 }
 
 void Saw::Update() {
-  angle -= 0.2f * my_time::delta_time;
+  angle -= 0.2f * mTime::delta_time;
   if (angle < 0.0) {
     angle += 360.0;
   }
-  position += velocity * my_time::delta_time;
+  position += velocity * mTime::delta_time;
   rect.x = static_cast<int>(position.x);
   rect.y = static_cast<int>(position.y);
 }
