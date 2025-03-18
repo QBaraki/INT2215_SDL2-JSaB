@@ -98,7 +98,7 @@ void Game::StopGameLoop() {
 
 void Game::EventHandler(SDL_Event& event) {
   if (event.type == SDL_QUIT) {
-    running = false;
+    StopGameLoop();
   }
   mScene::EventHandler(event);
 }
