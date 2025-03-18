@@ -17,10 +17,13 @@ class Player : public MonoBehaviour {
     };
 
   SDL_Texture* texture;
+  SDL_Texture* idle_gif;
   SDL_Rect rect;
   Vec2d velocity;
   float angle;
   int size;
+  bool is_moving, play_idle;
+  int idle_frame = 0;
   bool key[SDL_NUM_SCANCODES + 1] = {};
 
  public:

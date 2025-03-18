@@ -5,14 +5,17 @@
 
 #include "common.h"
 #include "managers/time.h"
+#include "managers/texture.h"
 
 Player::Player(SDL_Renderer* renderer_, int size_, int x_, int y_)
     : MonoBehaviour(renderer_), angle(90.0), size(size_), start_position(Vec2d(x_, y_)) {
   velocity = Vec2d(0, 0);
   position = start_position;
   rect.w = rect.h = size;
+  is_moving = play_idle = false;
   // Init player 'texture'
   texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, size, size);
+  idle_gif = nullptr;
   if (!texture) {
     throw std::runtime_error("Texture creation failed! SDL error: " + std::string(SDL_GetError()));
   }
@@ -26,6 +29,8 @@ Player::Player(SDL_Renderer* renderer_, int size_, int x_, int y_)
 
 Player::~Player() {
   SDL_DestroyTexture(texture);
+  texture = nullptr;
+  idle_gif = nullptr;
 }
 
 void Player::Update() {
@@ -81,6 +86,27 @@ void Player::Update() {
 void Player::Render() {
   rect.x = static_cast<int>(position.x);
   rect.y = static_cast<int>(position.y);
+  // Play jelly effect when idle
+  if (play_idle) {
+    rect.x -= 2;
+    rect.y -= 2;
+    rect.w = size + 4;
+    rect.h = size + 4;
+    idle_gif = mTexture::LoadImage(renderer, "assets/player_stop/" + std::to_string(++idle_frame) + ".png");
+    SDL_RenderCopy(renderer, idle_gif, nullptr, &rect);
+    if (idle_frame == 12) {
+      play_idle = false;
+    }
+    return;
+  }
+  // Stretch when moving
+  if (!is_moving) {
+    rect.w = rect.h = size;
+  } else {
+    rect.y -= 2;
+    rect.w = size - 4;
+    rect.h = size + 4;
+  }
   SDL_RenderCopyEx(renderer, texture, nullptr, &rect, angle, nullptr, SDL_FLIP_NONE);
 }
 
@@ -97,6 +123,12 @@ void Player::OnKeyUp(SDL_Event& event) {
   if (direction_map.count(event.key.keysym.scancode)) {
     velocity -= direction_map[event.key.keysym.scancode];
   }
+  if (!velocity.x && !velocity.y) {
+    is_moving = false;
+    play_idle = true;
+    idle_frame = 0;
+    angle = 90.0f;
+  }
   //std::cerr << "Player::velocity: " << velocity.x << ' ' << velocity.y << '\n';
 }
 
@@ -108,6 +140,8 @@ void Player::OnKeyDown(SDL_Event& event) {
   key[event.key.keysym.scancode] = true;
   if (direction_map.count(event.key.keysym.scancode)) {
     velocity += direction_map[event.key.keysym.scancode];
+    is_moving = true;
+    play_idle = false;
   }
   //std::cerr << "Player::velocity: " << velocity.x << ' ' << velocity.y << '\n';
 }
