@@ -94,13 +94,13 @@ void Player::Render() {
   rect.y = static_cast<int>(position.y);
   // Play jelly effect when idle
   if (play_idle) {
-    rect.x -= 2;
-    rect.y -= 2;
-    rect.w = size + 4;
-    rect.h = size + 4;
+    rect.x -= 4;
+    rect.y -= 4;
+    rect.w = size + 8;
+    rect.h = size + 8;
     idle_gif = mTexture::LoadImage(renderer, "assets/player_stop/" + std::to_string(++idle_frame) + ".png");
     SDL_RenderCopy(renderer, idle_gif, nullptr, &rect);
-    if (idle_frame == 12) {
+    if (idle_frame == 14) {
       play_idle = false;
     }
     return;
