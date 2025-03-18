@@ -84,6 +84,12 @@ void Player::Update() {
 }
 
 void Player::Render() {
+  if (is_moving && !velocity.x && !velocity.y) {
+    is_moving = false;
+    play_idle = true;
+    idle_frame = 0;
+    angle = 90.0f;
+  }
   rect.x = static_cast<int>(position.x);
   rect.y = static_cast<int>(position.y);
   // Play jelly effect when idle
@@ -122,12 +128,9 @@ void Player::OnKeyUp(SDL_Event& event) {
   key[event.key.keysym.scancode] = false;
   if (direction_map.count(event.key.keysym.scancode)) {
     velocity -= direction_map[event.key.keysym.scancode];
-  }
-  if (!velocity.x && !velocity.y) {
-    is_moving = false;
-    play_idle = true;
-    idle_frame = 0;
-    angle = 90.0f;
+    if (velocity.x || velocity.y) {
+      is_moving = true;
+    }
   }
   //std::cerr << "Player::velocity: " << velocity.x << ' ' << velocity.y << '\n';
 }
@@ -140,8 +143,9 @@ void Player::OnKeyDown(SDL_Event& event) {
   key[event.key.keysym.scancode] = true;
   if (direction_map.count(event.key.keysym.scancode)) {
     velocity += direction_map[event.key.keysym.scancode];
-    is_moving = true;
-    play_idle = false;
+    if (velocity.x || velocity.y) {
+      is_moving = true;
+    }
   }
   //std::cerr << "Player::velocity: " << velocity.x << ' ' << velocity.y << '\n';
 }
