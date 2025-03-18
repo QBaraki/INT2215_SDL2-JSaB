@@ -4,6 +4,7 @@
 #include "managers/audio.h"
 #include "managers/scene.h"
 #include "managers/time.h"
+#include "managers/texture.h"
 
 #include "utils/window_utils.h"
 #include "utils/log_utils.h"
@@ -43,8 +44,9 @@ Game::~Game() {
   SDL_DestroyRenderer(renderer);
   renderer = nullptr;
   mAudio::Destroy();
-  SDL_Quit();
+  mTexture::Destroy();
   mScene::Free();
+  SDL_Quit();
 }
 
 void Game::InitGameLoop() {

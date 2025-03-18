@@ -6,8 +6,9 @@
 Level::Level(SDL_Renderer* renderer_) : MonoBehaviour(renderer_) {
   player = new Player(renderer, 22, 200, WINDOW_HEIGHT / 2 - 11);
   music = nullptr;
-  level_loaded = false;
+  level_loaded = is_looped = false;
   objects_count = current_index = 0;
+  previous_duration = -1.0f;
 }
 
 Level::~Level() {
@@ -30,7 +31,7 @@ void Level::EventHandler(SDL_Event& event) {
 void Level::Update() {
   if (!level_loaded) {
     // Load the level here.
-    level_loaded = PlaygroundLevel::LoadLevel(renderer, loaded_objects, music);
+    level_loaded = PlaygroundLevel::LoadLevel(renderer, loaded_objects, music, is_looped);
     objects_count = loaded_objects.size();
     current_index = 0;
     if (Mix_PlayMusic(music, -1)) {
@@ -53,14 +54,18 @@ void Level::Update() {
   }
 
   // Check for pending objects
-  double current_time = Mix_GetMusicPosition(music);
-  while (current_index < objects_count && loaded_objects[current_index]->GetStartTime() <= current_time) {
+  double current_duration = Mix_GetMusicPosition(music);
+  if (is_looped && current_duration < previous_duration) {
+    current_index = 0;
+  }
+  while (current_index < objects_count && loaded_objects[current_index]->GetStartTime() <= current_duration) {
     LevelObject* new_object = loaded_objects[current_index]->Clone();
     onscreen_objects.push_back(new_object);
     std::cout << "Level::Update(): Created object from address " << loaded_objects[current_index] << " to " << new_object << '\n';
-    std::cerr << "Time: " << loaded_objects[current_index]->GetStartTime() << ' ' << current_time << '\n';
+    std::cerr << "Time: " << loaded_objects[current_index]->GetStartTime() << ' ' << current_duration << '\n';
     current_index++;
   }
+  previous_duration = current_duration;
 
   // Update objects and check collision
   for (LevelObject* o : onscreen_objects) {

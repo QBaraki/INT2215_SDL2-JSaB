@@ -13,11 +13,12 @@
 
 class Level : public MonoBehaviour {
   Player* player;
-  bool level_loaded;
+  bool level_loaded, is_looped;
   std::size_t objects_count, current_index;
   std::list<LevelObject*> onscreen_objects;
-  std::vector<LevelObject*> loaded_objects;
+  std::vector<LevelObject*> loaded_objects, pending;
   Mix_Music* music;
+  double previous_duration;
 
  public:
   Level(SDL_Renderer* renderer_);

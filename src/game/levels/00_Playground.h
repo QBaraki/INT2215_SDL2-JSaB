@@ -11,7 +11,7 @@
 
 namespace PlaygroundLevel {
 
-bool LoadLevel(SDL_Renderer* renderer, std::vector<LevelObject*>& object, Mix_Music*& music_player) {
+bool LoadLevel(SDL_Renderer* renderer, std::vector<LevelObject*> &object, Mix_Music* &music_player, bool &is_looped) {
   // Load objects
   object.push_back(new Saw(renderer, 0.00, 50, 1260, 420, {-0.173, 0}));
   object.push_back(new Saw(renderer, 0.66, 50, 1260, 420, {-0.173, 0}));
@@ -35,6 +35,7 @@ bool LoadLevel(SDL_Renderer* renderer, std::vector<LevelObject*>& object, Mix_Mu
     throw std::runtime_error("PlaygroundLevel::LoadLevel(): Failed to load music! SDL error: " + std::string(Mix_GetError()));
     return false;
   }
+  is_looped = true;
   return true;
 }
 
