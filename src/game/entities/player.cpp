@@ -130,6 +130,7 @@ void Player::OnKeyUp(SDL_Event& event) {
     velocity -= direction_map[event.key.keysym.scancode];
     if (velocity.x || velocity.y) {
       is_moving = true;
+      play_idle = false;
     }
   }
   //std::cerr << "Player::velocity: " << velocity.x << ' ' << velocity.y << '\n';
@@ -145,6 +146,7 @@ void Player::OnKeyDown(SDL_Event& event) {
     velocity += direction_map[event.key.keysym.scancode];
     if (velocity.x || velocity.y) {
       is_moving = true;
+      play_idle = false;
     }
   }
   //std::cerr << "Player::velocity: " << velocity.x << ' ' << velocity.y << '\n';
