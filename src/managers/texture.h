@@ -11,7 +11,7 @@ inline std::map<std::string, SDL_Texture*> textures;
 
 void Destroy();
 void CloseImage(const std::string& path);
-void CloseImage(SDL_Texture*& texture);
+void CloseImage(SDL_Texture* &texture);
 SDL_Texture* LoadImage(SDL_Renderer* renderer, const std::string& path);
 
 }  // namespace mTexture

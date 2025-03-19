@@ -39,13 +39,13 @@ Game::Game() {
 
 
 Game::~Game() {
+  mScene::Free();
+  mAudio::Destroy();
+  mTexture::Destroy();
   SDL_DestroyWindow(window);
   window = nullptr;
   SDL_DestroyRenderer(renderer);
   renderer = nullptr;
-  mAudio::Destroy();
-  mTexture::Destroy();
-  mScene::Free();
   SDL_Quit();
 }
 
