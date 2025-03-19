@@ -8,6 +8,7 @@ void mTexture::Destroy() {
   for (auto& p : textures) {
     CloseImage(p.second);
   }
+  textures.clear();
 }
 
 void mTexture::CloseImage(const std::string& path) {
@@ -22,7 +23,6 @@ void mTexture::CloseImage(const std::string& path) {
 void mTexture::CloseImage(SDL_Texture*& texture) {
   std::cout << "mTexture::LoadImage(): Closed texture from address " << texture << '\n';
   SDL_DestroyTexture(texture);
-  texture = nullptr;
 }
 
 SDL_Texture* mTexture::LoadImage(SDL_Renderer* renderer, const std::string& path) {
