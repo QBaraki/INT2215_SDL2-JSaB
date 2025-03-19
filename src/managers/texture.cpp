@@ -11,7 +11,7 @@ void mTexture::Destroy() {
 }
 
 void mTexture::CloseImage(const std::string& path) {
-  if (!textures.count(path)) {
+  if (!textures.count(path) || textures[path] == nullptr) {
     std::cout << "mTexture::LoadImage(): Skipped closing the texture with path " << path << " since it's not loaded yet!\n";
     return;
   }
@@ -26,7 +26,7 @@ void mTexture::CloseImage(SDL_Texture* &texture) {
 }
 
 SDL_Texture* mTexture::LoadImage(SDL_Renderer* renderer, const std::string& path) {
-  if (textures.count(path)) {
+  if (textures.count(path) && textures[path] != nullptr) {
     std::cout << "mTexture::LoadImage(): Image with path " << path << " already loaded. Returning the address " << textures[path] << '\n';
     return textures[path];
   }
