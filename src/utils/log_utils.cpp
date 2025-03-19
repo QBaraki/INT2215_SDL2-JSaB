@@ -7,7 +7,7 @@ static void LogStatus(Status* status) {
   auto delay_start_time = std::chrono::high_resolution_clock::now();
   while (status->running) {
     auto cur_time = std::chrono::high_resolution_clock::now();
-    int delta = std::chrono::duration<float, std::chrono::milliseconds::period>(cur_time - delay_start_time).count();
+    int delta = (int)std::chrono::duration<float, std::chrono::milliseconds::period>(cur_time - delay_start_time).count();
     if (delta < 1000) {
       continue;
     }

@@ -9,7 +9,7 @@ class MonoBehaviour {
 
  public:
   MonoBehaviour(SDL_Renderer* const renderer_);
-  ~MonoBehaviour();
+  virtual ~MonoBehaviour();
 
   virtual void Update();
   //virtual void FixedUpdate();
