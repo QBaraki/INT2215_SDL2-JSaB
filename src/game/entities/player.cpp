@@ -36,7 +36,7 @@ Player::~Player() {
 }
 
 void Player::Update() {
-  // Update position
+  // Update position (and process with dashing)
   Vec2d true_velocity = velocity;
   if (dash_offset != 0 && (true_velocity.x || true_velocity.y)) {
     dash_offset = 0;
@@ -51,7 +51,6 @@ void Player::Update() {
   } else {
     position += true_velocity * mTime::delta_time;
   }
-  // Dashing
   if (dash_offset != 0) {
     dash_offset--;
   } else if (dash_cooldown != 0) {
