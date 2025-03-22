@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <cassert>
 
 #include "common.h"
 #include "managers/time.h"
@@ -54,6 +55,7 @@ void Player::Update() {
   if (dash_offset != 0) {
     dash_offset--;
   } else if (dash_cooldown != 0) {
+    assert(dash_offset == 0);
     dash_cooldown--;
     if (!dash_cooldown) {
       dashing = false;
