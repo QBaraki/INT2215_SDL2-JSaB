@@ -23,6 +23,8 @@ class Player : public MonoBehaviour {
   float angle;
   int size;
   bool is_moving, play_idle;
+  bool dashing;
+  int dash_cooldown;
   int idle_frame = 0;
   bool key[SDL_NUM_SCANCODES + 1] = {};
 

@@ -13,6 +13,8 @@ Player::Player(SDL_Renderer* renderer_, int size_, int x_, int y_)
   position = start_position;
   rect.w = rect.h = size;
   is_moving = play_idle = false;
+  dashing = false;
+  dash_cooldown = 0;
   // Init player 'texture'
   texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, size, size);
   idle_gif = nullptr;
@@ -36,9 +38,16 @@ Player::~Player() {
 void Player::Update() {
   // Update position
   if (velocity.x && velocity.y) {
-    position += velocity * mTime::delta_time * 0.86602540378f;
+    position += (velocity * (dash_cooldown >= 16 ? 5.5f : 1.0f)) * mTime::delta_time * 0.86602540378f;
   } else {
-    position += velocity * mTime::delta_time;
+    position += (velocity * (dash_cooldown >= 16 ? 5.5f : 1.0f)) * mTime::delta_time;
+  }
+  // Dashing
+  if (dash_cooldown != 0) {
+    dash_cooldown--;
+    if (!dash_cooldown) {
+      dashing = false;
+    }
   }
   int padding = 8;
   if (position.x < padding) {
@@ -124,7 +133,6 @@ void Player::OnKeyUp(SDL_Event& event) {
   if (event.key.repeat) {
     return;
   }
-  //std::cerr << "Called Player::OnKeyUp()\n";
   key[event.key.keysym.scancode] = false;
   if (direction_map.count(event.key.keysym.scancode)) {
     velocity -= direction_map[event.key.keysym.scancode];
@@ -140,8 +148,11 @@ void Player::OnKeyDown(SDL_Event& event) {
   if (event.key.repeat) {
     return;
   }
-  //std::cerr << "Called Player::OnKeyDown()\n";
   key[event.key.keysym.scancode] = true;
+  if (event.key.keysym.scancode == SDL_SCANCODE_SPACE && dash_cooldown == 0 && (velocity.x || velocity.y)) {
+    dashing = true;
+    dash_cooldown = 20;
+  }
   if (direction_map.count(event.key.keysym.scancode)) {
     velocity += direction_map[event.key.keysym.scancode];
     if (velocity.x || velocity.y) {
