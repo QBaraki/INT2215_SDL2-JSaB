@@ -8,6 +8,7 @@
 
 #include "game/entities/level_object.h"
 #include "game/entities/bullet/saw.h"
+#include "game/entities/bullet/bubble.h"
 
 namespace PlaygroundLevel {
 
@@ -18,6 +19,8 @@ bool LoadLevel(SDL_Renderer* renderer, std::vector<LevelObject*> &object, Mix_Mu
   object.push_back(new Saw(renderer, 1.31, 50, 1260, 310, {-0.22, 0}));
   object.push_back(new Saw(renderer, 1.75, 50, 1260, 385, {-0.22, 0}));
   object.push_back(new Saw(renderer, 2.40, 50, 1260, 385, {-0.22, 0}));
+
+  object.push_back(new Bubble(renderer, 2.40, 35, 650, 300));
 
   object.push_back(new Saw(renderer, 3.48, 50, 1260, 385, {-0.22, 0}));
   object.push_back(new Saw(renderer, 4.13, 50, 1260, 385, {-0.22, 0}));
@@ -31,7 +34,7 @@ bool LoadLevel(SDL_Renderer* renderer, std::vector<LevelObject*> &object, Mix_Mu
   // Validate objects
   for (std::size_t i = 1; i < (int)object.size(); ++i) {
     if (object[i]->GetStartTime() < object[i - 1]->GetStartTime()) {
-      std::cout << "Playground::LoadLevel(): Level failed to load as the object is NOT sorted!\n";
+      std::cout << "Playground::LoadLevel(): Level failed to load as the object is NOT sorted! (index " << i <<  ")\n";
       return false;
     }
   }

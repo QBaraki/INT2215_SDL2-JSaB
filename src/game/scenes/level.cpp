@@ -52,6 +52,22 @@ void Level::Update() {
     delete *it;
     onscreen_objects.erase(it);
   }
+  target.clear();
+  // Check for "is-destryoed" objects
+  for (std::list<LevelObject*>::iterator it = onscreen_objects.begin(); it != onscreen_objects.end(); it++) {
+    if ((*it)->IsDestroyed()) {
+      target.push_back(it);
+      std::vector<LevelObject*> spawned = (*it)->Spawn();
+      for (auto it : spawned) {
+        onscreen_objects.push_back(it);
+      }
+    }
+  }
+  for (auto& it : target) {
+    std::cout << "Level::Update(): Deleted spawner object with address " << (*it) << '\n';
+    delete *it;
+    onscreen_objects.erase(it);
+  }
 
   // Check for pending objects
   double current_duration = Mix_GetMusicPosition(music);
