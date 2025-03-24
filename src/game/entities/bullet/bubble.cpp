@@ -1,5 +1,8 @@
 #include "bubble.h"
 
+#include <cmath>
+#include <iostream>
+
 #include "managers/texture.h"
 #include "managers/time.h"
 
@@ -46,10 +49,15 @@ bool Bubble::IsDestroyed() {
 std::vector<LevelObject*> Bubble::Spawn() {
   Vec2d center = Vec2d(position.x + size / 2, position.y + size / 2);
   std::vector<LevelObject*> res;
-  res.push_back(new Saw(renderer, pop_time, 10, center.x, center.y, {-0.4, 0.4}));
-  res.push_back(new Saw(renderer, pop_time, 10, center.x, center.y, {-0.4, -0.4}));
-  res.push_back(new Saw(renderer, pop_time, 10, center.x, center.y, {0.4, -0.4}));
-  res.push_back(new Saw(renderer, pop_time, 10, center.x, center.y, {0.4, 0.4}));
+  int count = 40;
+  for (int i = 0; i < count; ++i) {
+    double speed = 0.4f;
+    double shoot_angle = (360.0f / count * i) * 3.14159 / 180.0f;
+    double vx = std::cosf(shoot_angle) * speed;
+    double vy = std::sinf(shoot_angle) * speed;
+    //std::cerr << (360.0f / count * i) << ' ' << shoot_angle << ' ' << std::cos(shoot_angle) << ' ' << std::sin(shoot_angle) << ' ' << vx << ' ' << vy << '\n';
+    res.push_back(new Saw(renderer, pop_time, 10, center.x, center.y, {vx, vy}));
+  }
   return res;
 }
 
