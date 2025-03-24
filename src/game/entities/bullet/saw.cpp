@@ -4,7 +4,7 @@
 #include "managers/time.h"
 #include "managers/texture.h"
 
-Saw::Saw(SDL_Renderer* renderer_, double start_time_, int size_, int x, int y, Vec2d velocity_) : LevelObject(renderer_) {
+Saw::Saw(SDL_Renderer* renderer, double start_time_, int size_, int x, int y, Vec2d velocity_) : LevelObject(renderer) {
   texture = mTexture::LoadImage(renderer, "assets/bullets/saw.png");
   angle = 0.0f;
   size = size_;

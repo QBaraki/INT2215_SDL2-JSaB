@@ -25,7 +25,7 @@ double LevelObject::GetStartTime() {
   return start_time;
 }
 
-bool LevelObject::IsDetroyed() {
+bool LevelObject::IsDestroyed() {
   return false;
 }
 

@@ -12,8 +12,8 @@
 
 class LevelObject : public MonoBehaviour {
  protected:
-  double start_time;
   SDL_Texture* texture;
+  double start_time;
   SDL_Rect rect;  // destination rect to render.
   Vec2d position;
 
@@ -32,7 +32,7 @@ class LevelObject : public MonoBehaviour {
   virtual bool IsOutOfScreen() = 0;
 
   // This function should return `true` when it's *should* be destroyed
-  virtual bool IsDetroyed();
+  virtual bool IsDestroyed();
 
   // Return some objects when destroyed
   virtual std::vector<LevelObject*> Spawn();
