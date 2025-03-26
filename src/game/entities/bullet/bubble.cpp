@@ -6,7 +6,7 @@
 #include "managers/texture.h"
 #include "managers/time.h"
 
-#include "saw.h"
+#include "small_ball.h"
 
 Bubble::Bubble(SDL_Renderer* renderer, double start_time_, int size_, int x, int y) : LevelObject(renderer) {
   texture = mTexture::LoadImage(renderer, "assets/bullets/bubble.png");
@@ -56,7 +56,7 @@ std::vector<LevelObject*> Bubble::Spawn() {
     double vx = std::cosf(shoot_angle) * speed;
     double vy = std::sinf(shoot_angle) * speed;
     //std::cerr << (360.0f / count * i) << ' ' << shoot_angle << ' ' << std::cos(shoot_angle) << ' ' << std::sin(shoot_angle) << ' ' << vx << ' ' << vy << '\n';
-    res.push_back(new Saw(renderer, pop_time, 10, center.x, center.y, {vx, vy}));
+    res.push_back(new SmallBall(renderer, pop_time, 10, center.x, center.y, {vx, vy}));
   }
   return res;
 }

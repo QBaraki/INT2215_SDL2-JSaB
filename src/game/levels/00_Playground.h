@@ -22,6 +22,7 @@ bool LoadLevel(SDL_Renderer* renderer, std::vector<LevelObject*> &object, Mix_Mu
   object.push_back(new Saw(renderer, 2.40, 50, 1260, 385, {-0.22, 0}));
 
   object.push_back(new Bubble(renderer, 2.60, 35, 1000, 100));
+  object.push_back(new Bubble(renderer, 2.60, 35, 600, 300));
 
   object.push_back(new Saw(renderer, 3.48, 50, 1260, 385, {-0.22, 0}));
   object.push_back(new Saw(renderer, 4.13, 50, 1260, 385, {-0.22, 0}));
