@@ -15,19 +15,19 @@ namespace PlaygroundLevel {
 
 bool LoadLevel(SDL_Renderer* renderer, std::vector<LevelObject*> &object, Mix_Music* &music_player) {
   // Load objects
-  object.push_back(new Saw(renderer, 0.790, 50, 1260, 385, {-0.22, 0}));
-  object.push_back(new Saw(renderer, 1.440, 50, 1260, 385, {-0.22, 0}));
-  object.push_back(new Saw(renderer, 2.090, 50, 1260, 310, {-0.22, 0}));
-  object.push_back(new Saw(renderer, 2.530, 50, 1260, 385, {-0.22, 0}));
-  object.push_back(new Saw(renderer, 3.180, 50, 1260, 385, {-0.22, 0}));
-  object.push_back(new Saw(renderer, 4.250, 50, 1260, 385, {-0.22, 0}));
-  object.push_back(new Saw(renderer, 4.900, 50, 1260, 385,{-0.22, 0}));
-  object.push_back(new Saw(renderer, 5.600, 50, 1260, 310, {-0.22, 0}));
-  object.push_back(new Saw(renderer, 5.985, 50, 1260, 385, {-0.22, 0}));
-  object.push_back(new Saw(renderer, 6.640, 50, 1260, 385, {-0.22, 0}));
-  object.push_back(new Saw(renderer, 6.850, 50, 1260, 140, {-0.22, 0}));
-  object.push_back(new Saw(renderer, 7.180, 50, 1260, 500, {-0.22, 0}));
-  object.push_back(new Saw(renderer, 7.505, 50, 1260, 140, {-0.22, 0}));
+  object.push_back(new Saw(renderer, 0.790, 50, 1260, 385, {-0.27, 0}));
+  object.push_back(new Saw(renderer, 1.440, 50, 1260, 385, {-0.27, 0}));
+  object.push_back(new Saw(renderer, 2.090, 50, 1260, 310, {-0.27, 0}));
+  object.push_back(new Saw(renderer, 2.530, 50, 1260, 385, {-0.27, 0}));
+  object.push_back(new Saw(renderer, 3.180, 50, 1260, 385, {-0.27, 0}));
+  object.push_back(new Saw(renderer, 4.250, 50, 1260, 385, {-0.27, 0}));
+  object.push_back(new Saw(renderer, 4.900, 50, 1260, 385,{-0.27, 0}));
+  object.push_back(new Saw(renderer, 5.600, 50, 1260, 310, {-0.27, 0}));
+  object.push_back(new Saw(renderer, 5.985, 50, 1260, 385, {-0.27, 0}));
+  object.push_back(new Saw(renderer, 6.640, 50, 1260, 385, {-0.27, 0}));
+  object.push_back(new Saw(renderer, 6.850, 50, 1260, 140, {-0.27, 0}));
+  object.push_back(new Saw(renderer, 7.180, 50, 1260, 500, {-0.27, 0}));
+  object.push_back(new Saw(renderer, 7.505, 50, 1260, 140, {-0.27, 0}));
 
   for (int rep = 1; rep < 6; ++rep) {
     for (int i = 0; i < 13; ++i) {
