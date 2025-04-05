@@ -31,7 +31,7 @@ bool LoadLevel(SDL_Renderer* renderer, std::vector<LevelObject*> &object, Mix_Mu
 
   for (int rep = 1; rep < 6; ++rep) {
     for (int i = 0; i < 13; ++i) {
-      object.push_back(new Saw(renderer, object[i]->GetStartTime() + rep * 6.935, 50, object[i]->position.x, object[i]->position.y, {-0.22, 0}));
+      object.push_back(new Saw(renderer, object[i]->GetStartTime() + rep * 6.935, 50, object[i]->position.x, object[i]->position.y, {-0.27, 0}));
     }
   }
 
