@@ -3,6 +3,7 @@
 #include <SDL2/SDL_mixer.h>
 
 #include <iostream>
+#include <algorithm>
 #include <stdexcept>
 #include <vector>
 
@@ -12,7 +13,7 @@
 
 namespace PlaygroundLevel {
 
-bool LoadLevel(SDL_Renderer* renderer, std::vector<LevelObject*> &object, Mix_Music* &music_player, bool &is_looped) {
+bool LoadLevel(SDL_Renderer* renderer, std::vector<LevelObject*> &object, Mix_Music* &music_player) {
   // Load objects
   object.push_back(new Saw(renderer, 0.00, 50, 1260, 385, {-0.22, 0}));
   object.push_back(new Saw(renderer, 0.66, 50, 1260, 385, {-0.22, 0}));
@@ -33,24 +34,28 @@ bool LoadLevel(SDL_Renderer* renderer, std::vector<LevelObject*> &object, Mix_Mu
   object.push_back(new Saw(renderer, 6.08, 50, 1260, 140, {-0.22, 0}));
   object.push_back(new Saw(renderer, 6.40, 50, 1260, 500, {-0.22, 0}));
   object.push_back(new Saw(renderer, 6.72, 50, 1260, 140, {-0.22, 0}));
-  object.push_back(new Bubble(renderer, 6.80, 35, 1000, 230));
-  object.push_back(new Bubble(renderer, 7.00, 35, 1000, 350));
 
-  // Validate objects
-  for (std::size_t i = 1; i < (int)object.size(); ++i) {
-    if (object[i]->GetStartTime() < object[i - 1]->GetStartTime()) {
-      std::cout << "Playground::LoadLevel(): Level failed to load as the object is NOT sorted! (index " << i <<  ")\n";
-      return false;
+  std::vector<LevelObject*> pending;
+  for (LevelObject* o : object) {
+    std::vector<LevelObject*> spawned = o->Spawn();
+    for (auto it : spawned) {
+      pending.push_back(it);
     }
   }
+  for (auto o : pending) {
+    object.push_back(o);
+  }
+
+  std::sort(object.begin(), object.end(), [](LevelObject* lhs, LevelObject* rhs) {
+      return lhs->GetStartTime() < rhs->GetStartTime();
+    });
 
   // Load music
-  music_player = Mix_LoadMUS("assets/musics/00_playground/mus_corrupted_section_01.ogg");
+  music_player = Mix_LoadMUS("assets/musics/00_playground/mus_corrupted.ogg");
   if (music_player == nullptr) {
     throw std::runtime_error("PlaygroundLevel::LoadLevel(): Failed to load music! SDL error: " + std::string(Mix_GetError()));
     return false;
   }
-  is_looped = true;
   return true;
 }
 

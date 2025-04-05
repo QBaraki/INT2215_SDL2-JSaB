@@ -20,9 +20,9 @@ void mTexture::CloseImage(const std::string& path) {
 }
 
 void mTexture::CloseImage(SDL_Texture* &texture) {
-  std::cout << "mTexture::CloseImage(): Closed texture from address " << texture << '\n';
   SDL_DestroyTexture(texture);
   texture = nullptr;
+  std::cout << "mTexture::CloseImage(): Closed texture from address " << texture << '\n';
 }
 
 SDL_Texture* mTexture::LoadImage(SDL_Renderer* renderer, const std::string& path) {

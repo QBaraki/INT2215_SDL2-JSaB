@@ -30,5 +30,5 @@ bool LevelObject::IsDestroyed() {
 }
 
 std::vector<LevelObject*> LevelObject::Spawn() {
-  return std::vector<LevelObject*>();
+  return {};
 }

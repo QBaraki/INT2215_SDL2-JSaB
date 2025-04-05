@@ -6,7 +6,7 @@
 Level::Level(SDL_Renderer* renderer_) : MonoBehaviour(renderer_) {
   player = new Player(renderer, 22, 200, WINDOW_HEIGHT / 2 - 11);
   music = nullptr;
-  level_loaded = is_looped = false;
+  level_loaded = false;
   objects_count = current_index = 0;
   previous_duration = -1.0f;
 }
@@ -31,57 +31,39 @@ void Level::EventHandler(SDL_Event& event) {
 void Level::Update() {
   if (!level_loaded) {
     // Load the level here.
-    level_loaded = PlaygroundLevel::LoadLevel(renderer, loaded_objects, music, is_looped);
+    level_loaded = PlaygroundLevel::LoadLevel(renderer, loaded_objects, music);
     objects_count = loaded_objects.size();
     current_index = 0;
+    for (auto o : loaded_objects) {
+      preloaded.push_back(o->Clone());
+    }
     if (Mix_PlayMusic(music, -1)) {
       throw std::runtime_error("Level::RenderLevel(): Failed to play music! SDL error: " + std::string(Mix_GetError()));
     }
   }
   player->Update();
 
-  // Check for "out-of-screen" objects and delete them
+  // Check for "out-of-screen" and "is-destryoed" objects and delete them
   std::vector<std::list<LevelObject*>::iterator> target;
   for (std::list<LevelObject*>::iterator it = onscreen_objects.begin(); it != onscreen_objects.end(); it++) {
-    if ((*it)->IsOutOfScreen()) {
+    if ((*it)->IsOutOfScreen() || (*it)->IsDestroyed()) {
       target.push_back(it);
     }
   }
   for (auto& it : target) {
+    delete *it;
     std::cout << "Level::Update(): Deleted object with address " << (*it) << '\n';
-    delete *it;
-    onscreen_objects.erase(it);
-  }
-  target.clear();
-  // Check for "is-destryoed" objects
-  for (std::list<LevelObject*>::iterator it = onscreen_objects.begin(); it != onscreen_objects.end(); it++) {
-    if ((*it)->IsDestroyed()) {
-      target.push_back(it);
-      std::vector<LevelObject*> spawned = (*it)->Spawn();
-      for (auto it : spawned) {
-        onscreen_objects.push_back(it);
-      }
-    }
-  }
-  for (auto& it : target) {
-    std::cout << "Level::Update(): Deleted spawner object with address " << (*it) << '\n';
-    delete *it;
     onscreen_objects.erase(it);
   }
 
   // Check for pending objects
   double current_duration = Mix_GetMusicPosition(music);
-  if (is_looped && current_duration < previous_duration) {
-    current_index = 0;
-  }
-  while (current_index < objects_count && loaded_objects[current_index]->GetStartTime() <= current_duration) {
-    LevelObject* new_object = loaded_objects[current_index]->Clone();
-    onscreen_objects.push_back(new_object);
-    std::cout << "Level::Update(): Created object from address " << loaded_objects[current_index] << " to " << new_object << '\n';
+  while (current_index < objects_count && preloaded[current_index]->GetStartTime() <= current_duration) {
+    onscreen_objects.push_back(preloaded[current_index]);
+    //std::cout << "Level::Update(): Created object from address " << preloaded[current_index] << " to " << new_object << '\n';
     //std::cerr << "Time: " << loaded_objects[current_index]->GetStartTime() << ' ' << current_duration << '\n';
     current_index++;
   }
-  previous_duration = current_duration;
 
   // Update objects and check collision
   for (LevelObject* o : onscreen_objects) {
