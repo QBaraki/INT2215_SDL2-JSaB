@@ -9,10 +9,9 @@ struct Bubble : public LevelObject {
   double angle;
   double pop_time;
   double countdown;
-  Vec2d position;
 
  public:
-  Bubble(SDL_Renderer* renderer, double start_time_, int size_, int x, int y);
+  Bubble(SDL_Renderer* renderer, double pop_time_, int size_, int x, int y);
   void Update() override;
   void Render() override;
   bool IsCollided(Player* target) override;

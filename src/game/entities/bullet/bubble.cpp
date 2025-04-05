@@ -8,14 +8,14 @@
 
 #include "small_ball.h"
 
-Bubble::Bubble(SDL_Renderer* renderer, double start_time_, int size_, int x, int y) : LevelObject(renderer) {
+Bubble::Bubble(SDL_Renderer* renderer, double pop_time_, int size_, int x, int y) : LevelObject(renderer) {
   texture = mTexture::LoadImage(renderer, "assets/bullets/bubble.png");
   angle = 0.0f;
   size = size_;
-  start_time = start_time_;
-  position = Vec2d(x, y);
   countdown = 0.5f;
-  pop_time = start_time + countdown;
+  pop_time = pop_time_;
+  start_time = pop_time - countdown;
+  position = Vec2d(x, y);
   SetRect(x, y, size, size);
 }
 

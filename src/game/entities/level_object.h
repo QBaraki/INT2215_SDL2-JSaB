@@ -15,9 +15,9 @@ class LevelObject : public MonoBehaviour {
   SDL_Texture* texture;
   double start_time;
   SDL_Rect rect;  // destination rect to render.
-  Vec2d position;
 
  public:
+  Vec2d position;
 
   LevelObject(SDL_Renderer* renderer_);
   ~LevelObject();
