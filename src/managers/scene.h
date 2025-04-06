@@ -15,7 +15,7 @@ inline std::stack<MonoBehaviour*> stack;
 void Init(SDL_Renderer* renderer_);
 void Pop();
 void Update();
-//void FixedUpdate();
+void FixedUpdate();
 void Render();
 void EventHandler(SDL_Event& event);
 void Free();

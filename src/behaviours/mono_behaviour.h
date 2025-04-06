@@ -12,7 +12,7 @@ class MonoBehaviour {
   virtual ~MonoBehaviour();
 
   virtual void Update();
-  //virtual void FixedUpdate();
+  virtual void FixedUpdate();
   virtual void Render();
   virtual void EventHandler(SDL_Event& event);
   virtual void OnKeyUp(SDL_Event& event);

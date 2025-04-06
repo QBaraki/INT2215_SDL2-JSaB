@@ -25,6 +25,7 @@ class Level : public MonoBehaviour {
   ~Level();
   void EventHandler(SDL_Event& event) override;
   void Update() override;
+  void FixedUpdate() override;
   void Render() override;
 };
 

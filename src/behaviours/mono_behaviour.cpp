@@ -12,7 +12,7 @@ MonoBehaviour::~MonoBehaviour() {}
 
 void MonoBehaviour::Update() {}
 
-//void MonoBehaviour::FixedUpdate() {}
+void MonoBehaviour::FixedUpdate() {}
 
 void MonoBehaviour::Render() {}
 

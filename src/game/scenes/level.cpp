@@ -30,16 +30,7 @@ void Level::EventHandler(SDL_Event& event) {
 
 void Level::Update() {
   if (!level_loaded) {
-    // Load the level here.
-    level_loaded = PlaygroundLevel::LoadLevel(renderer, loaded_objects, music);
-    objects_count = loaded_objects.size();
-    current_index = 0;
-    for (auto o : loaded_objects) {
-      preloaded.push_back(o->Clone());
-    }
-    if (Mix_PlayMusic(music, -1)) {
-      throw std::runtime_error("Level::RenderLevel(): Failed to play music! SDL error: " + std::string(Mix_GetError()));
-    }
+    return;
   }
   player->Update();
 
@@ -70,6 +61,21 @@ void Level::Update() {
     o->Update();
     if (o->IsCollided(player)) {
       std::cerr << "Level::Update(): Player collided with object from address " << o << '\n';
+    }
+  }
+}
+
+void Level::FixedUpdate() {
+  if (!level_loaded) {
+    // Load the level here.
+    level_loaded = PlaygroundLevel::LoadLevel(renderer, loaded_objects, music);
+    objects_count = loaded_objects.size();
+    current_index = 0;
+    for (auto o : loaded_objects) {
+      preloaded.push_back(o->Clone());
+    }
+    if (Mix_PlayMusic(music, -1)) {
+      throw std::runtime_error("Level::RenderLevel(): Failed to play music! SDL error: " + std::string(Mix_GetError()));
     }
   }
 }
