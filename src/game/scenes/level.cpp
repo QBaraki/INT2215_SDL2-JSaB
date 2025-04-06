@@ -3,6 +3,14 @@
 #include "common.h"
 #include "game/levels/00_Playground.h"
 
+#ifdef NDEBUG
+#define cerr \
+  if (0)     \
+  std::cerr
+#else
+using std::cerr;
+#endif  // NDEBUG
+
 Level::Level(SDL_Renderer* renderer_) : MonoBehaviour(renderer_) {
   player = new Player(renderer, 22, 200, WINDOW_HEIGHT / 2 - 11);
   music = nullptr;
@@ -46,7 +54,7 @@ void Level::Update() {
   }
   for (auto& it : target) {
     delete *it;
-    // std::cerr << "Level::Update(): Deleted object with address " << (*it) << '\n';
+    cerr << "Level::Update(): Deleted object with address " << (*it) << '\n';
     onscreen_objects.erase(it);
   }
 
@@ -54,8 +62,8 @@ void Level::Update() {
   double current_duration = Mix_GetMusicPosition(music);
   while (current_index < objects_count && preloaded[current_index]->GetStartTime() <= current_duration) {
     onscreen_objects.push_back(preloaded[current_index]);
-    //// std::cerr << "Level::Update(): Created object from address " << preloaded[current_index] << " to " << new_object << '\n';
-    //// std::cerr << "Time: " << loaded_objects[current_index]->GetStartTime() << ' ' << current_duration << '\n';
+    //cerr << "Level::Update(): Created object from address " << preloaded[current_index] << " to " << new_object << '\n';
+    //cerr << "Time: " << loaded_objects[current_index]->GetStartTime() << ' ' << current_duration << '\n';
     current_index++;
   }
 
@@ -63,7 +71,7 @@ void Level::Update() {
   for (LevelObject* o : onscreen_objects) {
     o->Update();
     if (o->IsCollided(player)) {
-      // std::cerr << "Level::Update(): Player collided with object from address " << o << '\n';
+      cerr << "Level::Update(): Player collided with object from address " << o << '\n';
     }
   }
 }

@@ -8,6 +8,14 @@
 #include "managers/time.h"
 #include "managers/texture.h"
 
+#ifdef NDEBUG
+#define cerr \
+  if (0)     \
+  std::cerr
+#else
+using std::cerr;
+#endif  // NDEBUG
+
 Player::Player(SDL_Renderer* renderer_, int size_, int x_, int y_)
     : MonoBehaviour(renderer_), angle(90.0), size(size_), start_position(Vec2d(x_, y_)) {
   velocity = Vec2d(0, 0);
@@ -22,7 +30,7 @@ Player::Player(SDL_Renderer* renderer_, int size_, int x_, int y_)
   if (!texture) {
     throw std::runtime_error("Texture creation failed! SDL error: " + std::string(SDL_GetError()));
   }
-  // std::cerr << "Player::Player(): Player loaded\n";
+  cerr << "Player::Player(): Player loaded\n";
   SDL_Rect r = {0, 0, size, size};
   SDL_SetRenderTarget(renderer, texture);
   SDL_SetRenderDrawColor(renderer, 0x00, 0xFF, 0xFF, 0xFF);
@@ -153,7 +161,7 @@ void Player::OnKeyUp(SDL_Event& event) {
       play_idle = false;
     }
   }
-  //// std::cerr << "Player::velocity: " << velocity.x << ' ' << velocity.y << '\n';
+  //cerr << "Player::velocity: " << velocity.x << ' ' << velocity.y << '\n';
 }
 
 void Player::OnKeyDown(SDL_Event& event) {
@@ -173,5 +181,5 @@ void Player::OnKeyDown(SDL_Event& event) {
       play_idle = false;
     }
   }
-  //// std::cerr << "Player::velocity: " << velocity.x << ' ' << velocity.y << '\n';
+  //cerr << "Player::velocity: " << velocity.x << ' ' << velocity.y << '\n';
 }
