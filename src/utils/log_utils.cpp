@@ -12,13 +12,13 @@ static void LogStatus(Status* status) {
       continue;
     }
     delay_start_time = cur_time;
-    std::cerr << "Frame time: " << status->delta_time << " FPS: ";
+    // std::cerr << "Frame time: " << status->delta_time << " FPS: ";
     if ((int)status->delta_time == 0) {
-      std::cerr << "inf";
+      // std::cerr << "inf";
     } else {
-      std::cerr << 1000 / (int)status->delta_time;
+      // std::cerr << 1000 / (int)status->delta_time;
     }
-    std::cerr << '\n';
+    // std::cerr << '\n';
   }
 }
 

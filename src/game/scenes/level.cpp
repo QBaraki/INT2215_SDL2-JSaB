@@ -43,7 +43,7 @@ void Level::Update() {
   }
   for (auto& it : target) {
     delete *it;
-    std::cerr << "Level::Update(): Deleted object with address " << (*it) << '\n';
+    // std::cerr << "Level::Update(): Deleted object with address " << (*it) << '\n';
     onscreen_objects.erase(it);
   }
 
@@ -51,8 +51,8 @@ void Level::Update() {
   double current_duration = Mix_GetMusicPosition(music);
   while (current_index < objects_count && preloaded[current_index]->GetStartTime() <= current_duration) {
     onscreen_objects.push_back(preloaded[current_index]);
-    //std::cerr << "Level::Update(): Created object from address " << preloaded[current_index] << " to " << new_object << '\n';
-    //std::cerr << "Time: " << loaded_objects[current_index]->GetStartTime() << ' ' << current_duration << '\n';
+    //// std::cerr << "Level::Update(): Created object from address " << preloaded[current_index] << " to " << new_object << '\n';
+    //// std::cerr << "Time: " << loaded_objects[current_index]->GetStartTime() << ' ' << current_duration << '\n';
     current_index++;
   }
 
@@ -60,7 +60,7 @@ void Level::Update() {
   for (LevelObject* o : onscreen_objects) {
     o->Update();
     if (o->IsCollided(player)) {
-      std::cerr << "Level::Update(): Player collided with object from address " << o << '\n';
+      // std::cerr << "Level::Update(): Player collided with object from address " << o << '\n';
     }
   }
 }
@@ -68,7 +68,7 @@ void Level::Update() {
 void Level::FixedUpdate() {
   if (!level_loaded) {
     // Load the level here.
-    level_loaded = PlaygroundLevel::LoadLevel(renderer, loaded_objects, music);
+    PlaygroundLevel::LoadLevel(renderer, loaded_objects, music);
     objects_count = loaded_objects.size();
     current_index = 0;
     for (auto o : loaded_objects) {
@@ -77,12 +77,12 @@ void Level::FixedUpdate() {
     if (Mix_PlayMusic(music, -1)) {
       throw std::runtime_error("Level::RenderLevel(): Failed to play music! SDL error: " + std::string(Mix_GetError()));
     }
+    level_loaded = true;
   }
 }
 
 void Level::Render() {
   if (!level_loaded) {
-    ;
     return;
   }
   if (!onscreen_objects.empty()) {  // this is just for easier debugging purposes
