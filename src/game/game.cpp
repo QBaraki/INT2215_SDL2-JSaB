@@ -59,20 +59,20 @@ Game::~Game() {
 
 void Game::InitGameLoop() {
   // Start a new thread to do FixedUpdate()
-  std::thread fixed_update_thread([&](void) {
-      cerr << "Thread spawned\n";
-      while (running) {
-        auto frame_start_time = std::chrono::high_resolution_clock::now();
-        FixedUpdate();
-        auto frame_stop_time = std::chrono::high_resolution_clock::now();
-        mTime::delta_time = std::chrono::duration<float, std::chrono::milliseconds::period>(frame_stop_time - frame_start_time).count();
-        if (FIXED_UPDATE_TIME_STEP > mTime::delta_time) {
-          std::this_thread::sleep_for(std::chrono::milliseconds(FIXED_UPDATE_TIME_STEP - (int)mTime::fixed_delta_time));
-          frame_stop_time = std::chrono::high_resolution_clock::now();
-          mTime::delta_time = std::chrono::duration<float, std::chrono::milliseconds::period>(frame_stop_time - frame_start_time).count();
-        }
-      }
-    });
+  //std::thread fixed_update_thread([&](void) {
+  //    cerr << "Thread spawned\n";
+  //    while (running) {
+  //      auto frame_start_time = std::chrono::high_resolution_clock::now();
+  //      FixedUpdate();
+  //      auto frame_stop_time = std::chrono::high_resolution_clock::now();
+  //      mTime::delta_time = std::chrono::duration<float, std::chrono::milliseconds::period>(frame_stop_time - frame_start_time).count();
+  //      if (FIXED_UPDATE_TIME_STEP > mTime::delta_time) {
+  //        std::this_thread::sleep_for(std::chrono::milliseconds(FIXED_UPDATE_TIME_STEP - (int)mTime::fixed_delta_time));
+  //        frame_stop_time = std::chrono::high_resolution_clock::now();
+  //        mTime::delta_time = std::chrono::duration<float, std::chrono::milliseconds::period>(frame_stop_time - frame_start_time).count();
+  //      }
+  //    }
+  //  });
 
   // level = new Level(renderer);
 
@@ -97,7 +97,7 @@ void Game::InitGameLoop() {
     //  mTime::delta_time = std::chrono::duration<float, std::chrono::milliseconds::period>(frame_stop_time - frame_start_time).count();
     //}
   }
-  fixed_update_thread.join();
+  //fixed_update_thread.join();
 }
 
 void Game::StopGameLoop() {
@@ -115,9 +115,9 @@ void Game::Update() {
   mScene::Update();
 }
 
-void Game::FixedUpdate() {
-  mScene::FixedUpdate();
-}
+//void Game::FixedUpdate() {
+//  mScene::FixedUpdate();
+//}
 
 void Game::Render() {
   SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);

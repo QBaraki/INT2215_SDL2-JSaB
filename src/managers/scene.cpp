@@ -19,12 +19,12 @@ void mScene::Update() {
   stack.top()->Update();
 }
 
-void mScene::FixedUpdate() {
-  if (stack.empty()) {
-    return;
-  }
-  stack.top()->FixedUpdate();
-}
+//void mScene::FixedUpdate() {
+//  if (stack.empty()) {
+//    return;
+//  }
+//  stack.top()->FixedUpdate();
+//}
 
 void mScene::Render() {
   if (stack.empty()) {

@@ -1,6 +1,7 @@
 #include "level.h"
 
 #include "common.h"
+#include "managers/texture.h"
 #include "game/levels/00_Playground.h"
 
 #ifdef NDEBUG
@@ -17,6 +18,7 @@ Level::Level(SDL_Renderer* renderer_) : MonoBehaviour(renderer_) {
   level_loaded = false;
   objects_count = current_index = 0;
   previous_duration = -1.0f;
+  loading_screen = mTexture::LoadImage(renderer, "assets/UI/loading_screen.png");
 }
 
 Level::~Level() {
@@ -39,9 +41,24 @@ void Level::EventHandler(SDL_Event& event) {
   player->EventHandler(event);
 }
 
+// FIXME: Do NOT use Render here...
 void Level::Update() {
   if (!level_loaded) {
-    return;
+    // Load the level here.
+    SDL_RenderCopy(renderer, loading_screen, nullptr, nullptr);
+    SDL_RenderPresent(renderer);
+    PlaygroundLevel::LoadLevel(renderer, loaded_objects, music);
+    objects_count = loaded_objects.size();
+    current_index = 0;
+    for (auto o : loaded_objects) {
+      preloaded.push_back(o->Clone());
+    }
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_RenderClear(renderer);
+    if (Mix_PlayMusic(music, -1)) {
+      throw std::runtime_error("Level::RenderLevel(): Failed to play music! SDL error: " + std::string(Mix_GetError()));
+    }
+    level_loaded = true;
   }
   player->Update();
 
@@ -76,23 +93,7 @@ void Level::Update() {
   }
 }
 
-void Level::FixedUpdate() {
-  if (!level_loaded) {
-    // Load the level here.
-    PlaygroundLevel::LoadLevel(renderer, loaded_objects, music);
-    objects_count = loaded_objects.size();
-    current_index = 0;
-    for (auto o : loaded_objects) {
-      preloaded.push_back(o->Clone());
-    }
-    if (Mix_PlayMusic(music, -1)) {
-      throw std::runtime_error("Level::RenderLevel(): Failed to play music! SDL error: " + std::string(Mix_GetError()));
-    }
-    level_loaded = true;
-  }
-}
-
-void Level::Render() {
+void Level::Render() {  
   if (!level_loaded) {
     return;
   }

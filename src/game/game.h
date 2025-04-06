@@ -20,7 +20,7 @@ class Game {
   void StopGameLoop();
   void EventHandler(SDL_Event& event);
   void Update();  // called every frame.
-  void FixedUpdate();  // called every common.h:FIXED_UPDATE_TIME_STEP.
+  //void FixedUpdate();  // called every common.h:FIXED_UPDATE_TIME_STEP.
   void Render();
 };
 
