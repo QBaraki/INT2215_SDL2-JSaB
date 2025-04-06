@@ -22,7 +22,7 @@ Player::Player(SDL_Renderer* renderer_, int size_, int x_, int y_)
   if (!texture) {
     throw std::runtime_error("Texture creation failed! SDL error: " + std::string(SDL_GetError()));
   }
-  std::cout << "Player::Player(): Player loaded\n";
+  std::cerr << "Player::Player(): Player loaded\n";
   SDL_Rect r = {0, 0, size, size};
   SDL_SetRenderTarget(renderer, texture);
   SDL_SetRenderDrawColor(renderer, 0x00, 0xFF, 0xFF, 0xFF);

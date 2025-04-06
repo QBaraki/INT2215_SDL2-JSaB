@@ -12,22 +12,22 @@ void mTexture::Destroy() {
 
 void mTexture::CloseImage(const std::string& path) {
   if (!textures.count(path) || textures[path] == nullptr) {
-    std::cout << "mTexture::CloseImage(): Skipped closing the texture with path " << path << " since it's not loaded yet!\n";
+    std::cerr << "mTexture::CloseImage(): Skipped closing the texture with path " << path << " since it's not loaded yet!\n";
     return;
   }
-  std::cout << "mTexture::CloseImage(): Closing the texture with path " << path << "... ";
+  std::cerr << "mTexture::CloseImage(): Closing the texture with path " << path << "... ";
   CloseImage(textures[path]);
 }
 
 void mTexture::CloseImage(SDL_Texture* &texture) {
   SDL_DestroyTexture(texture);
+  std::cerr << "mTexture::CloseImage(): Closed texture from address " << texture << '\n';
   texture = nullptr;
-  std::cout << "mTexture::CloseImage(): Closed texture from address " << texture << '\n';
 }
 
 SDL_Texture* mTexture::LoadImage(SDL_Renderer* renderer, const std::string& path) {
   if (textures.count(path) && textures[path] != nullptr) {
-    std::cout << "mTexture::LoadImage(): Image with path " << path << " already loaded. Returning the address " << textures[path] << '\n';
+    std::cerr << "mTexture::LoadImage(): Image with path " << path << " already loaded. Returning the address " << textures[path] << '\n';
     return textures[path];
   }
   SDL_Texture* texture = IMG_LoadTexture(renderer, path.c_str());
@@ -35,7 +35,7 @@ SDL_Texture* mTexture::LoadImage(SDL_Renderer* renderer, const std::string& path
     throw std::runtime_error("mTexture::LoadImage(): Load image " + std::string(path) + " failed!. SDL error: " + IMG_GetError());
     return nullptr;
   }
-  std::cout << "mTexture::LoadImage(): Loaded image " << path << " with address " << texture << '\n';
+  std::cerr << "mTexture::LoadImage(): Loaded image " << path << " with address " << texture << '\n';
   textures[path] = texture;
   return texture;
 }
