@@ -103,3 +103,5 @@ void Level::Render() {
   }
   player->Render();
 }
+
+#undef cerr

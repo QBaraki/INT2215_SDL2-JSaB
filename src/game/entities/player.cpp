@@ -183,3 +183,5 @@ void Player::OnKeyDown(SDL_Event& event) {
   }
   //cerr << "Player::velocity: " << velocity.x << ' ' << velocity.y << '\n';
 }
+
+#undef cerr

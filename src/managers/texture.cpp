@@ -47,3 +47,5 @@ SDL_Texture* mTexture::LoadImage(SDL_Renderer* renderer, const std::string& path
   textures[path] = texture;
   return texture;
 }
+
+#undef cerr

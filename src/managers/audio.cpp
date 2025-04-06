@@ -21,3 +21,5 @@ void mAudio::Init() {
 void mAudio::Destroy() {
   Mix_Quit();
 }
+
+#undef cerr

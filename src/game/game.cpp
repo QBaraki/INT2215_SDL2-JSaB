@@ -128,3 +128,5 @@ void Game::Render() {
 
   SDL_RenderPresent(renderer);
 }
+
+#undef cerr

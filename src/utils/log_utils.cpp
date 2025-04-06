@@ -33,3 +33,5 @@ static void LogStatus(Status* status) {
 std::thread LogUtils::thread_status(Status* status) {
   return std::thread(LogStatus, status);
 }
+
+#undef cerr
