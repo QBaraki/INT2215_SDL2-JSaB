@@ -25,6 +25,9 @@ Level::~Level() {
 }
 
 void Level::EventHandler(SDL_Event& event) {
+  if (!level_loaded) {
+    return;
+  }
   player->EventHandler(event);
 }
 
