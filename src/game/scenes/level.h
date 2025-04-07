@@ -19,12 +19,14 @@ class Level : public MonoBehaviour {
   std::vector<LevelObject*> loaded_objects, pending, preloaded;
   Mix_Music* music;
   double previous_duration;
+  SDL_Texture* loading_screen;
 
  public:
   Level(SDL_Renderer* renderer_);
   ~Level();
   void EventHandler(SDL_Event& event) override;
   void Update() override;
+  //void FixedUpdate() override;
   void Render() override;
 };
 

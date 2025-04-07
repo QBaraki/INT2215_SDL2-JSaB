@@ -15,6 +15,14 @@
 #include <thread>
 #include <chrono>
 
+#ifdef NDEBUG
+#define cerr \
+  if (0)     \
+  std::cerr
+#else
+using std::cerr;
+#endif  // NDEBUG
+
 Game::Game() {
   if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
     throw std::runtime_error("Failed to initialize SDL. SDL error: " + std::string(SDL_GetError()));
@@ -23,12 +31,12 @@ Game::Game() {
   if (window == nullptr) {
     throw std::runtime_error("Failed to create SDL window. SDL error: " + std::string(SDL_GetError()));
   }
-  std::cerr << "Window created!\n";
+  cerr << "Window created!\n";
   renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
   if (renderer == nullptr) {
     throw std::runtime_error("Failed to create SDL renderer window. SDL error: " + std::string(SDL_GetError()));
   }
-  std::cerr << "Renderer created!\n";
+  cerr << "Renderer created!\n";
   WindowUtils::Center(window);
   mAudio::Init();
   //level = nullptr;
@@ -52,14 +60,14 @@ Game::~Game() {
 void Game::InitGameLoop() {
   // Start a new thread to do FixedUpdate()
   //std::thread fixed_update_thread([&](void) {
-  //    std::cerr << "Thread spawned\n";
+  //    cerr << "Thread spawned\n";
   //    while (running) {
   //      auto frame_start_time = std::chrono::high_resolution_clock::now();
   //      FixedUpdate();
   //      auto frame_stop_time = std::chrono::high_resolution_clock::now();
-  //      my_time::delta_time = std::chrono::duration<float, std::chrono::milliseconds::period>(frame_stop_time - frame_start_time).count();
-  //      if (FIXED_UPDATE_TIME_STEP > my_time::delta_time) {
-  //        std::this_thread::sleep_for(std::chrono::milliseconds(FIXED_UPDATE_TIME_STEP - (int)my_time::fixed_delta_time));
+  //      mTime::delta_time = std::chrono::duration<float, std::chrono::milliseconds::period>(frame_stop_time - frame_start_time).count();
+  //      if (FIXED_UPDATE_TIME_STEP > mTime::delta_time) {
+  //        std::this_thread::sleep_for(std::chrono::milliseconds(FIXED_UPDATE_TIME_STEP - (int)mTime::fixed_delta_time));
   //        frame_stop_time = std::chrono::high_resolution_clock::now();
   //        mTime::delta_time = std::chrono::duration<float, std::chrono::milliseconds::period>(frame_stop_time - frame_start_time).count();
   //      }
@@ -68,8 +76,8 @@ void Game::InitGameLoop() {
 
   // level = new Level(renderer);
 
-  // auto logger = LogUtils::thread_status(&status);
-  //float frame_time = 1000.0f / MAX_FPS;
+  //auto logger = LogUtils::thread_status(&status);
+  float frame_time = 1000.0f / MAX_FPS;
   while (running) {
     SDL_Event event;
     auto frame_start_time = std::chrono::high_resolution_clock::now();
@@ -120,3 +128,5 @@ void Game::Render() {
 
   SDL_RenderPresent(renderer);
 }
+
+#undef cerr

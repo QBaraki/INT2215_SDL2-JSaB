@@ -3,6 +3,14 @@
 #include <iostream>
 #include <chrono>
 
+#ifdef NDEBUG
+#define cerr \
+  if (0)     \
+  std::cerr
+#else
+using std::cerr;
+#endif  // NDEBUG
+
 static void LogStatus(Status* status) {
   auto delay_start_time = std::chrono::high_resolution_clock::now();
   while (status->running) {
@@ -12,16 +20,18 @@ static void LogStatus(Status* status) {
       continue;
     }
     delay_start_time = cur_time;
-    std::cerr << "Frame time: " << status->delta_time << " FPS: ";
+    cerr << "Frame time: " << status->delta_time << " FPS: ";
     if ((int)status->delta_time == 0) {
-      std::cerr << "inf";
+      cerr << "inf";
     } else {
-      std::cerr << 1000 / (int)status->delta_time;
+      cerr << 1000 / (int)status->delta_time;
     }
-    std::cerr << '\n';
+    cerr << '\n';
   }
 }
 
 std::thread LogUtils::thread_status(Status* status) {
   return std::thread(LogStatus, status);
 }
+
+#undef cerr
