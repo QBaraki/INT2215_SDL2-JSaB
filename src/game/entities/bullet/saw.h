@@ -2,6 +2,7 @@
 #define SAW_H
 
 #include <SDL2/SDL.h>
+
 #include "game/entities/level_object.h"
 #include "geometry/vec2d.h"
 
