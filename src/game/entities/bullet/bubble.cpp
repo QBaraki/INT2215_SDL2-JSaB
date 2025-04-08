@@ -27,7 +27,7 @@ void Bubble::Update() {
   rect.x = static_cast<int>(position.x);
   rect.y = static_cast<int>(position.y);
   countdown -= 0.001 * mTime::delta_time;
-  if (countdown < 0.1f) {
+  if (countdown < 0.05f) {
     texture = mTexture::LoadImage(renderer, "assets/bullets/bubble_white.png");
   }
 }
