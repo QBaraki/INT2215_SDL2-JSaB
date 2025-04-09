@@ -41,6 +41,12 @@ void Block::Update() {
 void Block::Render() {
   if (countdown > 0) {
     SDL_SetTextureAlphaMod(texture, int(160 * (original_countdown - countdown) / original_countdown));
+  } else if (white_time > 0) {
+    SDL_Rect r = rect;
+    r.x -= 5; r.y -= 5;
+    r.w += 10; r.h += 10;
+    SDL_RenderCopy(renderer, texture, nullptr, &r);
+    return;
   }
   SDL_RenderCopy(renderer, texture, nullptr, &rect);
 }
