@@ -30,7 +30,7 @@ void Saw::Update() {
 void Saw::Render() {
   SDL_RenderCopyEx(renderer, texture, nullptr, &rect, angle, nullptr, SDL_FLIP_NONE);
   if (white_time > 0.0f) {
-    SDL_SetTextureAlphaMod(spawn_texture, 255 * white_time / 0.27f);
+    SDL_SetTextureAlphaMod(spawn_texture, 0xFF * white_time / 0.27f);
     SDL_RenderCopyEx(renderer, spawn_texture, nullptr, &rect, angle, nullptr, SDL_FLIP_NONE);
   }
 }

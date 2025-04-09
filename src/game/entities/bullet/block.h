@@ -8,8 +8,10 @@
 
 class Block : public LevelObject {
   double fatal_time, countdown, original_countdown, white_time, intact_time;
+  double disapearing_time;
   int w, h;
   SDL_Rect rect;
+  bool intacted;
 
  public:
   Vec2d top_left, bottom_right;
