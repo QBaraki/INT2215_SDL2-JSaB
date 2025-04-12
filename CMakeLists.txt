@@ -49,8 +49,7 @@ if (WIN32)
 endif()
 
 if (PROJECT_IS_TOP_LEVEL)
-    add_custom_command(
-        TARGET ${PROJECT_NAME} POST_BUILD
+    execute_process(
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
             ${CMAKE_BINARY_DIR}/compile_commands.json
             ${CMAKE_CURRENT_SOURCE_DIR}/compile_commands.json
