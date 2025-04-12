@@ -50,11 +50,11 @@ void Block::Render() {
     return;
   }
   if (white_time > 0.0f) {
-    SDL_Rect r = rect;
-    r.x -= 5; r.y -= 5;
-    r.w += 10; r.h += 10;
+    //SDL_Rect r = rect;
+    //r.x -= 5; r.y -= 5;
+    //r.w += 10; r.h += 10;
     SDL_SetTextureAlphaMod(texture, 0xFF);
-    SDL_RenderCopy(renderer, texture, nullptr, &r);
+    SDL_RenderCopy(renderer, texture, nullptr, &rect);
     return;
   }
   if (intacted) {

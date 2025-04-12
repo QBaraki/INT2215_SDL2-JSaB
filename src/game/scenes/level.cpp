@@ -59,7 +59,7 @@ void Level::Update() {
       throw std::runtime_error("Level::RenderLevel(): Failed to play music! SDL error: " + std::string(Mix_GetError()));
     }
 #ifndef NDEBUG
-    Mix_VolumeMusic(30);
+    Mix_VolumeMusic(10);
     //Mix_SetMusicPosition(13.67);
 #endif  // NDEBUG
     level_loaded = true;
