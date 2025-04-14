@@ -12,6 +12,7 @@
 #include "game/entities/bullet/saw.h"
 #include "game/entities/bullet/bubble.h"
 #include "game/entities/bullet/block.h"
+#include "game/entities/bullet/circle.h"
 
 #define SZ(a) (int)(a.size())
 
@@ -21,6 +22,7 @@ bool LoadLevel(SDL_Renderer* renderer, std::vector<LevelObject*> &object, Mix_Mu
   // Load objects
   int sz;
 
+/*
   // Section 1: Saw
   object.push_back(new Saw(renderer, 0.790, 50, 1260, 385, {-0.27, 0}));
   object.push_back(new Saw(renderer, 1.440, 50, 1260, 385, {-0.27, 0}));
@@ -64,8 +66,9 @@ bool LoadLevel(SDL_Renderer* renderer, std::vector<LevelObject*> &object, Mix_Mu
   }
 
   // Section 4: Horizontal and Vertical lines
+ */
 
-
+  object.push_back(new Circle(renderer, 2.0f, 0.5f, 5.0f, {400, 350}, 150, 1));
 
   // Push spawning objects
   std::vector<LevelObject*> pending;

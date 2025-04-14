@@ -1,6 +1,8 @@
 #ifndef CIRCLE_H
 #define CIRCLE_H
 
+#include <random>
+
 #include <SDL2/SDL.h>
 
 #include "game/entities/level_object.h"
@@ -14,6 +16,7 @@ class Circle : public LevelObject {
   double countdown, original_countdown, fatal_time, intact_time, bubbing_time, disappearing_time;
   bool intacted;
   Vec2d midpoint;
+  std::mt19937 rng;
 
  public:
   Circle(SDL_Renderer* renderer, double fatal_time_, double countdown_, double intact_time_, Vec2d midpoint_, double radius_, double radius_rate_);

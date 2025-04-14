@@ -1,6 +1,8 @@
 #include "circle.h"
 
 #include <iostream>
+#include <random>
+#include <chrono>
 #include <cmath>
 
 #include "managers/time.h"
@@ -23,6 +25,7 @@ Circle::Circle(SDL_Renderer* renderer, double fatal_time_, double countdown_, do
   rect.x = static_cast<int>(midpoint.x - original_radius);
   rect.y = static_cast<int>(midpoint.y - original_radius);
   rect.w = rect.h = static_cast<int>(2 * original_radius);
+  rng = std::mt19937(std::chrono::steady_clock::now().time_since_epoch().count());
 }
 
 void Circle::Update() {
@@ -69,8 +72,10 @@ void Circle::Render() {
     return;
   }
   SDL_Rect r = rect;
-  r.x = static_cast<int>(midpoint.x - radius);
-  r.y = static_cast<int>(midpoint.y - radius);
+  int cox = std::uniform_int_distribution<int>(-2, 2)(rng);
+  int coy = std::uniform_int_distribution<int>(-2, 2)(rng);
+  r.x = static_cast<int>(midpoint.x - radius) + cox;
+  r.y = static_cast<int>(midpoint.y - radius) + coy;
   r.w = r.h = static_cast<int>(2 * radius);
   SDL_RenderCopy(renderer, texture, nullptr, &r);
   SDL_SetTextureAlphaMod(white_texture, 120 + 50 * std::abs(std::cos(alpha_angle * 3.14159 / 180.0f)));
