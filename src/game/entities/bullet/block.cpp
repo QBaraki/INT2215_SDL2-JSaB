@@ -7,7 +7,11 @@
 
 Block::Block(SDL_Renderer* renderer, double fatal_time_, double countdown_, double intact_time_, Vec2d top_left_, Vec2d bottom_right_) : LevelObject(renderer) {
   fatal_time = fatal_time_;
-  intact_time = intact_time_;
+  if (intact_time_ < 0.0f) {
+    intact_time = -intact_time_ - fatal_time;
+  } else {
+    intact_time = intact_time_;
+  }
   original_countdown = countdown_;
   countdown = original_countdown;
   white_time = 0.1f;

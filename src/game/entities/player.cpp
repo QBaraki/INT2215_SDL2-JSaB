@@ -53,7 +53,7 @@ void Player::Update() {
     dash_cooldown = 20;
   }
   if (dash_cooldown >= 16) {
-    true_velocity *= 5.5f;
+    true_velocity *= 5.7f;
   }
   if (true_velocity.x && true_velocity.y) {
     position += true_velocity * mTime::delta_time * 0.86602540378f;

@@ -2,6 +2,8 @@
 
 #include <SDL2/SDL_mixer.h>
 
+#include <random>
+#include <chrono>
 #include <iostream>
 #include <algorithm>
 #include <stdexcept>
@@ -18,9 +20,21 @@
 
 namespace PlaygroundLevel {
 
+int GetRando(std::mt19937 &rng, int L, int R, int prev, int diff) {
+  int x;
+  while (true) {
+    x = std::uniform_int_distribution<int>(L, R)(rng);
+    if (std::abs(x - prev) >= diff)
+      break;
+    std::cerr << (x - prev) << ' ' << diff << '\n';
+  }
+  return x;
+}
+
 bool LoadLevel(SDL_Renderer* renderer, std::vector<LevelObject*> &object, Mix_Music* &music_player) {
   // Load objects
   int sz;
+  std::mt19937 rng(std::chrono::high_resolution_clock::now().time_since_epoch().count());
 
 /*
   // Section 1: Saw
@@ -66,9 +80,56 @@ bool LoadLevel(SDL_Renderer* renderer, std::vector<LevelObject*> &object, Mix_Mu
   }
 
   // Section 4: Horizontal and Vertical lines
- */
 
-  object.push_back(new Circle(renderer, 2.0f, 0.5f, 5.0f, {400, 350}, 150, 1));
+  for (int rep = 0; rep < 2; ++rep) {
+    // Horizontal
+    object.push_back(new Block(renderer, 28.500 + rep * 3.455, 0.75, -29.8f - rep * 3.455, {200, 0}, {240, WINDOW_HEIGHT}));
+    object.push_back(new Block(renderer, 28.500 + rep * 3.455, 0.75, -29.8f - rep * 3.455, {600, 0}, {640, WINDOW_HEIGHT}));
+    object.push_back(new Block(renderer, 28.500 + rep * 3.455, 0.75, -29.8f - rep * 3.455, {1000, 0}, {1040, WINDOW_HEIGHT}));
+    object.push_back(new Block(renderer, 29.148 + rep * 3.455, 0.75, -29.8f - rep * 3.455, {400, 0}, {440, WINDOW_HEIGHT}));
+    object.push_back(new Block(renderer, 29.148 + rep * 3.455, 0.75, -29.8f - rep * 3.455, {800, 0}, {840, WINDOW_HEIGHT}));
+    // Vertical
+    object.push_back(new Block(renderer, 30.230 + rep * 3.445, 0.75, -31.53 - rep * 3.445, {0, 340}, {WINDOW_WIDTH, 380}));
+    object.push_back(new Block(renderer, 30.880 + rep * 3.445, 0.75, -31.53 - rep * 3.445, {0, 140}, {WINDOW_WIDTH, 180}));
+    object.push_back(new Block(renderer, 30.880 + rep * 3.445, 0.75, -31.53 - rep * 3.445, {0, 540}, {WINDOW_WIDTH, 580}));
+  }
+*/
+  
+  // Section 5: Horizontal line and circles
+
+  for (int rep = 0; rep < 2; ++rep) {
+    double x = 99999, y = 99999;
+    y = GetRando(rng, 10, WINDOW_HEIGHT - 50, y, 80);
+    object.push_back(new Block(renderer, 35.427 + rep * 3.445, 0.75f, 0.65f, {0, y}, {WINDOW_WIDTH, y + 40}));
+    y = GetRando(rng, 10, WINDOW_HEIGHT - 50, y, 80);
+    object.push_back(new Block(renderer, 35.427 + rep * 3.445, 0.75f, 0.65f, {0, y}, {WINDOW_WIDTH, y + 40}));
+    y = GetRando(rng, 10, WINDOW_HEIGHT - 50, y, 80);
+    object.push_back(new Block(renderer, 36.078 + rep * 3.445, 0.75f, 0.65f, {0, y}, {WINDOW_WIDTH, y + 40}));
+    y = GetRando(rng, 10, WINDOW_HEIGHT - 50, y, 80);
+    object.push_back(new Block(renderer, 36.078 + rep * 3.445, 0.75f, 0.65f, {0, y}, {WINDOW_WIDTH, y + 40}));
+
+    x = GetRando(rng, 200, WINDOW_WIDTH - 200, x, 400);
+    y = GetRando(rng, 80, WINDOW_HEIGHT - 80, y, 150);
+    object.push_back(new Circle(renderer, 36.725 + rep * 3.445, 0.85f, 0.1f, {x, y}, 300, 2.0f));
+    x = GetRando(rng, 200, WINDOW_WIDTH - 200, x, 400);
+    y = GetRando(rng, 80, WINDOW_HEIGHT - 80, y, 150);
+    object.push_back(new Circle(renderer, 36.824 + rep * 3.445, 0.949f, 0.1f, {x, y}, 300, 2.0f));
+    x = GetRando(rng, 200, WINDOW_WIDTH - 200, x, 400);
+    y = GetRando(rng, 80, WINDOW_HEIGHT - 80, y, 150);
+    object.push_back(new Circle(renderer, 36.924 + rep * 3.445, 1.049f, 0.1f, {x, y}, 300, 2.0f));
+    x = GetRando(rng, 200, WINDOW_WIDTH - 200, x, 400);
+    y = GetRando(rng, 80, WINDOW_HEIGHT - 80, y, 150);
+    object.push_back(new Circle(renderer, 37.049 + rep * 3.445, 1.174f, 0.1f, {x, y}, 300, 2.0f));
+
+    y = GetRando(rng, 10, WINDOW_HEIGHT - 50, y, 80);
+    object.push_back(new Block(renderer, 37.135 + rep * 3.445, 0.75f, 0.65f, {0, y}, {WINDOW_WIDTH, y + 40}));
+    y = GetRando(rng, 10, WINDOW_HEIGHT - 50, y, 80);
+    object.push_back(new Block(renderer, 37.135 + rep * 3.445, 0.75f, 0.65f, {0, y}, {WINDOW_WIDTH, y + 40}));
+    y = GetRando(rng, 10, WINDOW_HEIGHT - 50, y, 80);
+    object.push_back(new Block(renderer, 37.810 + rep * 3.445, 0.75f, 0.65f, {0, y}, {WINDOW_WIDTH, y + 40}));
+    y = GetRando(rng, 10, WINDOW_HEIGHT - 50, y, 80);
+    object.push_back(new Block(renderer, 37.810 + rep * 3.445, 0.75f, 0.65f, {0, y}, {WINDOW_WIDTH, y + 40}));
+  }
 
   // Push spawning objects
   std::vector<LevelObject*> pending;

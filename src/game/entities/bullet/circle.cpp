@@ -21,10 +21,11 @@ Circle::Circle(SDL_Renderer* renderer, double fatal_time_, double countdown_, do
   intacted = false;
   midpoint = midpoint_;
   angle = alpha_angle = 0.0f;
-  bubbing_time = disappearing_time = 0.07f;
+  bubbing_time = disappearing_time = 0.06f;
   rect.x = static_cast<int>(midpoint.x - original_radius);
   rect.y = static_cast<int>(midpoint.y - original_radius);
   rect.w = rect.h = static_cast<int>(2 * original_radius);
+  original_radius *= 1.2f;
   rng = std::mt19937(std::chrono::steady_clock::now().time_since_epoch().count());
 }
 
@@ -72,8 +73,8 @@ void Circle::Render() {
     return;
   }
   SDL_Rect r = rect;
-  int cox = std::uniform_int_distribution<int>(-2, 2)(rng);
-  int coy = std::uniform_int_distribution<int>(-2, 2)(rng);
+  int cox = std::uniform_int_distribution<int>(-3, 3)(rng);
+  int coy = std::uniform_int_distribution<int>(-3, 3)(rng);
   r.x = static_cast<int>(midpoint.x - radius) + cox;
   r.y = static_cast<int>(midpoint.y - radius) + coy;
   r.w = r.h = static_cast<int>(2 * radius);
