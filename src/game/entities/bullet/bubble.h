@@ -4,7 +4,7 @@
 #include "game/entities/level_object.h"
 #include "geometry/vec2d.h"
 
-struct Bubble : public LevelObject {
+class Bubble : public LevelObject {
   int size;
   double angle;
   double pop_time;
