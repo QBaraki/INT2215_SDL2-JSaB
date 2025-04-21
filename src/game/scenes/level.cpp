@@ -60,7 +60,7 @@ void Level::Update() {
     }
 #ifndef NDEBUG
     Mix_VolumeMusic(50);
-    Mix_SetMusicPosition(34.00f);
+    //Mix_SetMusicPosition(34.00f);
 #endif  // NDEBUG
     level_loaded = true;
   }
@@ -91,8 +91,12 @@ void Level::Update() {
   // Update objects and check collision
   for (LevelObject* o : onscreen_objects) {
     o->Update();
-    if (o->IsCollided(player)) {
+    if (!player->IsInvi() && o->IsCollided(player)) {
       cerr << "Level::Update(): Player collided with object from address " << o << '\n';
+      if (player->OnHit()) {
+        cerr << "Level::Update(): Player died!\n";
+        // Do something here.
+      }
     }
   }
 }

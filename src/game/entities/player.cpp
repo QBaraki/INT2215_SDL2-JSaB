@@ -19,6 +19,7 @@ using std::cerr;
 Player::Player(SDL_Renderer* renderer_, int size_, int x_, int y_)
     : MonoBehaviour(renderer_), angle(90.0), size(size_), start_position(Vec2d(x_, y_)) {
   hitpoint = 3;
+  invi_time = 0;
   velocity = Vec2d(0, 0);
   position = start_position;
   rect.w = rect.h = size;
@@ -107,6 +108,10 @@ void Player::Update() {
       angle -= 15;
     }
   }
+  invi_time -= mTime::delta_time / 1000.0f;
+  if (invi_time < 0.000000000f) {
+    invi_time = 0.000000000f;
+  }
 }
 
 void Player::Render() {
@@ -144,6 +149,20 @@ void Player::Render() {
 
 int Player::GetSize() {
   return size;
+}
+
+bool Player::IsInvi() {
+  return invi_time > 0.000000000f;
+}
+
+bool Player::OnHit() {
+  hitpoint--;
+  if (hitpoint == 0) {
+    return true;
+  }
+  texture = mTexture::LoadImage(renderer, "assets/player/" + std::to_string(hitpoint) + "_idle.png");
+  invi_time = 3.000000000f;
+  return false;
 }
 
 void Player::OnKeyUp(SDL_Event& event) {

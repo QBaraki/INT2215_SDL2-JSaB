@@ -22,15 +22,16 @@ class Player : public MonoBehaviour {
   Vec2d velocity;
   float angle;
   int size;
-  int hitpoint;
   bool is_moving, play_idle;
   bool dashing;
   int dash_cooldown;
   int buffer_frame;  // offset frame to dash when pressed the spacebar
+  double invi_time;
   int idle_frame = 0;
   bool key[SDL_NUM_SCANCODES + 1] = {};
 
  public:
+  int hitpoint;
   Vec2d position;
   Vec2d start_position;
 
@@ -40,6 +41,8 @@ class Player : public MonoBehaviour {
   //void FixedUpdate() override;
   void Render() override;
   int GetSize();
+  bool IsInvi();
+  bool OnHit();
   void OnKeyUp(SDL_Event& event) override;
   void OnKeyDown(SDL_Event& event) override;
 };
