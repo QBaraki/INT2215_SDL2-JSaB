@@ -161,7 +161,7 @@ bool Player::OnHit() {
     return true;
   }
   texture = mTexture::LoadImage(renderer, "assets/player/" + std::to_string(hitpoint) + "_idle.png");
-  invi_time = 3.000000000f;
+  invi_time = 2.000000000f;
   return false;
 }
 
