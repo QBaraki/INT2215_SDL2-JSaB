@@ -18,24 +18,21 @@ using std::cerr;
 
 Player::Player(SDL_Renderer* renderer_, int size_, int x_, int y_)
     : MonoBehaviour(renderer_), angle(90.0), size(size_), start_position(Vec2d(x_, y_)) {
+  hitpoint = 3;
   velocity = Vec2d(0, 0);
   position = start_position;
   rect.w = rect.h = size;
   is_moving = play_idle = false;
   dashing = false;
-  dash_cooldown = dash_offset = 0;
+  dash_cooldown = buffer_frame = 0;
   // Init player 'texture'
-  texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, size, size);
+  texture = mTexture::LoadImage(renderer, "assets/player/3_idle.png");
   idle_gif = nullptr;
   if (!texture) {
     throw std::runtime_error("Texture creation failed! SDL error: " + std::string(SDL_GetError()));
   }
   cerr << "Player::Player(): Player loaded\n";
   SDL_Rect r = {0, 0, size, size};
-  SDL_SetRenderTarget(renderer, texture);
-  SDL_SetRenderDrawColor(renderer, 0x00, 0xFF, 0xFF, 0xFF);
-  SDL_RenderFillRect(renderer, &r);
-  SDL_SetRenderTarget(renderer, nullptr);
 }
 
 Player::~Player() {
@@ -47,8 +44,8 @@ Player::~Player() {
 void Player::Update() {
   // Update position (and process with dashing)
   Vec2d true_velocity = velocity;
-  if (dash_offset != 0 && (true_velocity.x || true_velocity.y)) {
-    dash_offset = 0;
+  if (buffer_frame != 0 && (true_velocity.x || true_velocity.y)) {
+    buffer_frame = 0;
     dashing = true;
     dash_cooldown = 20;
   }
@@ -60,10 +57,10 @@ void Player::Update() {
   } else {
     position += true_velocity * mTime::delta_time;
   }
-  if (dash_offset != 0) {
-    dash_offset--;
+  if (buffer_frame != 0) {
+    buffer_frame--;
   } else if (dash_cooldown != 0) {
-    assert(dash_offset == 0);
+    assert(buffer_frame == 0);
     dash_cooldown--;
     if (!dash_cooldown) {
       dashing = false;
@@ -127,7 +124,7 @@ void Player::Render() {
     rect.y -= 4;
     rect.w = size + 8;
     rect.h = size + 8;
-    idle_gif = mTexture::LoadImage(renderer, "assets/player_stop/" + std::to_string(++idle_frame) + ".png");
+    idle_gif = mTexture::LoadImage(renderer, "assets/player/" + std::to_string(hitpoint) + "_" + std::to_string(++idle_frame) + ".png");
     SDL_RenderCopy(renderer, idle_gif, nullptr, &rect);
     if (idle_frame == 14) {
       play_idle = false;
@@ -171,7 +168,7 @@ void Player::OnKeyDown(SDL_Event& event) {
   key[event.key.keysym.scancode] = true;
   if (event.key.keysym.scancode == SDL_SCANCODE_SPACE) {
     if (dash_cooldown == 0) {
-      dash_offset = 5;
+      buffer_frame = 5;
     }
   } 
   if (direction_map.count(event.key.keysym.scancode)) {

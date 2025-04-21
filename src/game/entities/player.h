@@ -22,10 +22,11 @@ class Player : public MonoBehaviour {
   Vec2d velocity;
   float angle;
   int size;
+  int hitpoint;
   bool is_moving, play_idle;
   bool dashing;
   int dash_cooldown;
-  int dash_offset;  // offset frame to dash when pressed the spacebar
+  int buffer_frame;  // offset frame to dash when pressed the spacebar
   int idle_frame = 0;
   bool key[SDL_NUM_SCANCODES + 1] = {};
 
