@@ -87,7 +87,7 @@ bool Circle::IsCollided(Player* target) {
   if (!intacted) {
     return false;
   }
-  int player_radius = target->GetSize() / 2;
+  int player_radius = target->GetSize() / 2 - 5;
   Vec2d player_mid = Vec2d(target->position.x + player_radius, target->position.y + player_radius);
   Vec2d diff = player_mid - midpoint;
   int d = int((diff.x * diff.x) + (diff.y * diff.y));
