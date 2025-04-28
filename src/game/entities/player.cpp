@@ -1,6 +1,7 @@
 #include "player.h"
 
 #include <iostream>
+#include <algorithm>
 #include <stdexcept>
 #include <cassert>
 
@@ -49,6 +50,7 @@ void Player::Update() {
     buffer_frame = 0;
     dashing = true;
     dash_cooldown = 20;
+    invi_time = std::max(invi_time, (double)0.2f);
   }
   if (dash_cooldown >= 16) {
     true_velocity *= 5.7f;

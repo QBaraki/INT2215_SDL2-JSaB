@@ -10,6 +10,7 @@ int main(int argc, char* argv[]) {
     game.InitGameLoop();
   } catch (std::runtime_error& err) {
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "An error occurred", err.what(), NULL);
+    return -1;
   }
   return 0;
 }
