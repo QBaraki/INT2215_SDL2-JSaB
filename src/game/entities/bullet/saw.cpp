@@ -36,7 +36,7 @@ void Saw::Render() {
 }
 
 bool Saw::IsCollided(Player* target) {
-  int player_radius = target->GetSize() / 2;
+  int player_radius = target->GetSize() / 2 - 5;
   int saw_radius = size / 2 - 2;
   Vec2d saw_mid = Vec2d(position.x + saw_radius, position.y + saw_radius);
   Vec2d player_mid = Vec2d(target->position.x + player_radius, target->position.y + player_radius);

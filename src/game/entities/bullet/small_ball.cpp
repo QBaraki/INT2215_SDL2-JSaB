@@ -25,7 +25,7 @@ void SmallBall::Render() {
 }
 
 bool SmallBall::IsCollided(Player* target) {
-  int player_radius = target->GetSize() / 2;
+  int player_radius = target->GetSize() / 2 - 5;
   Vec2d ball_mid = Vec2d(position.x + size, position.y + size);
   Vec2d player_mid = Vec2d(target->position.x + player_radius, target->position.y + player_radius);
   Vec2d diff = player_mid - ball_mid;
