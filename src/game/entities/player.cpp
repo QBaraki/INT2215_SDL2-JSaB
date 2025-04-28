@@ -18,7 +18,7 @@ using std::cerr;
 
 Player::Player(SDL_Renderer* renderer_, int size_, int x_, int y_)
     : MonoBehaviour(renderer_), angle(90.0), size(size_), start_position(Vec2d(x_, y_)) {
-  hitpoint = 3;
+  hitpoint = 4;
   invi_time = 0;
   velocity = Vec2d(0, 0);
   position = start_position;
@@ -27,7 +27,7 @@ Player::Player(SDL_Renderer* renderer_, int size_, int x_, int y_)
   dashing = false;
   dash_cooldown = buffer_frame = 0;
   // Init player 'texture'
-  texture = mTexture::LoadImage(renderer, "assets/player/3_idle.png");
+  texture = mTexture::LoadImage(renderer, "assets/player/" + std::to_string(hitpoint) + "_idle.png");
   idle_gif = nullptr;
   if (!texture) {
     throw std::runtime_error("Texture creation failed! SDL error: " + std::string(SDL_GetError()));
@@ -147,11 +147,11 @@ void Player::Render() {
   SDL_RenderCopyEx(renderer, texture, nullptr, &rect, angle, nullptr, SDL_FLIP_NONE);
 }
 
-int Player::GetSize() {
+int Player::GetSize() const {
   return size;
 }
 
-bool Player::IsInvi() {
+bool Player::IsInvi() const {
   return invi_time > 0.000000000f;
 }
 

@@ -8,7 +8,9 @@
 
 #include "utils/window_utils.h"
 #include "utils/log_utils.h"
+
 #include "game/scenes/level.h"
+#include "game/scenes/main_menu.h"
 
 #include <iostream>
 #include <stdexcept>
@@ -42,7 +44,8 @@ Game::Game() {
   //level = nullptr;
   running = true;
 
-  mScene::stack.emplace(new Level(renderer));
+  mScene::stack.emplace(new MainMenu(renderer));
+  //mScene::stack.emplace(new Level(renderer));
 }
 
 

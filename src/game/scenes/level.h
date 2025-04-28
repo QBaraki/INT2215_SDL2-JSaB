@@ -13,7 +13,7 @@
 
 class Level : public MonoBehaviour {
   Player* player;
-  bool level_loaded;
+  bool level_loaded, player_died;
   std::size_t objects_count, current_index;
   std::list<LevelObject*> onscreen_objects;
   std::vector<LevelObject*> loaded_objects, pending, preloaded;

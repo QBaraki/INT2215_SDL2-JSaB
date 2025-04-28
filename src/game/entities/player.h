@@ -40,8 +40,8 @@ class Player : public MonoBehaviour {
   void Update() override;
   //void FixedUpdate() override;
   void Render() override;
-  int GetSize();
-  bool IsInvi();
+  int GetSize() const;
+  bool IsInvi() const;
   bool OnHit();
   void OnKeyUp(SDL_Event& event) override;
   void OnKeyDown(SDL_Event& event) override;

@@ -2,6 +2,7 @@
 
 #include "common.h"
 #include "managers/texture.h"
+#include "managers/scene.h"
 #include "game/levels/00_Playground.h"
 
 #ifdef NDEBUG
@@ -16,6 +17,7 @@ Level::Level(SDL_Renderer* renderer_) : MonoBehaviour(renderer_) {
   player = new Player(renderer, 22, 200, WINDOW_HEIGHT / 2 - 11);
   music = nullptr;
   level_loaded = false;
+  player_died = false;
   objects_count = current_index = 0;
   previous_duration = -1.0f;
   loading_screen = mTexture::LoadImage(renderer, "assets/UI/loading_screen.png");
@@ -95,7 +97,9 @@ void Level::Update() {
       cerr << "Level::Update(): Player collided with object from address " << o << '\n';
       if (player->OnHit()) {
         cerr << "Level::Update(): Player died!\n";
-        // Do something here.
+        player_died = true;
+        mScene::Pop();
+        return;
       }
     }
   }
