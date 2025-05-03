@@ -35,7 +35,7 @@ void mTexture::CloseImage(SDL_Texture* &texture) {
 
 SDL_Texture* mTexture::LoadImage(SDL_Renderer* renderer, const std::string& path) {
   if (textures.count(path) && textures[path] != nullptr) {
-    cerr << "mTexture::LoadImage(): Image with path " << path << " already loaded. Returning the address " << textures[path] << '\n';
+    //cerr << "mTexture::LoadImage(): Image with path " << path << " already loaded. Returning the address " << textures[path] << '\n';
     return textures[path];
   }
   SDL_Texture* texture = IMG_LoadTexture(renderer, path.c_str());

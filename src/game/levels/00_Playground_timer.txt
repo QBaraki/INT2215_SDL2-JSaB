@@ -59,3 +59,25 @@ circ(4)  37.049
 
 hline(5)  38.885
 diff = 13.458
+
+# sec 6
+
+# sec 7
+
+vline(1)+saw: 56.202
+vline(2):     56.626
+
+vline(2)+saw: 59.663
+
+bub-all(1):   63.994
+bub-chain(2)  64.980
+
+diff = 3.461
+
+# sec 9: 
+
+beat 1:  83.900
+beat 2:  84.330
+
+diff = 0.43
+

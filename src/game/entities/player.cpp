@@ -53,7 +53,7 @@ void Player::Update() {
     invi_time = std::max(invi_time, (double)0.3f);
   }
   if (dash_cooldown >= 16) {
-    true_velocity *= 5.7f;
+    true_velocity *= 6.0f;
   }
   if (true_velocity.x && true_velocity.y) {
     position += true_velocity * mTime::delta_time * 0.86602540378f;
@@ -154,6 +154,9 @@ int Player::GetSize() const {
 }
 
 bool Player::IsInvi() const {
+#ifndef NDEBUG
+  return true;
+#endif  // NDEBUG
   return invi_time > 0.000000000f;
 }
 
