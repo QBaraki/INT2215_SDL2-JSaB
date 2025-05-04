@@ -55,7 +55,7 @@ void Level::Update() {
     // Load the level here.
     SDL_RenderCopy(renderer, loading_screen, nullptr, nullptr);
     SDL_RenderPresent(renderer);
-    PlaygroundLevel::LoadLevel(renderer, loaded_objects, music);
+    PlaygroundLevel::LoadLevel(renderer, loaded_objects, music, ending_duration);
     objects_count = loaded_objects.size();
     current_index = 0;
     for (auto o : loaded_objects) {
@@ -89,6 +89,13 @@ void Level::Update() {
 
   // Check for pending objects
   double current_duration = Mix_GetMusicPosition(music);
+
+  if (current_duration >= ending_duration) {
+    Mix_HaltMusic();
+    mScene::Pop();
+    return;
+  }
+
   while (current_index < objects_count && preloaded[current_index]->GetStartTime() <= current_duration) {
     onscreen_objects.push_back(preloaded[current_index]);
     //cerr << "Level::Update(): Created object from address " << preloaded[current_index] << " to " << new_object << '\n';

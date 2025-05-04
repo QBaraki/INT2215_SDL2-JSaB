@@ -31,7 +31,7 @@ inline int GetRando(std::mt19937 &rng, int L, int R, int prev, int diff) {
   return x;
 }
 
-inline bool LoadLevel(SDL_Renderer* renderer, std::vector<LevelObject*> &object, Mix_Music* &music_player) {
+inline bool LoadLevel(SDL_Renderer* renderer, std::vector<LevelObject*> &object, Mix_Music* &music_player, double& ending_duration) {
   // Load objects
   int sz;
   std::mt19937 rng(std::chrono::high_resolution_clock::now().time_since_epoch().count());
@@ -324,6 +324,7 @@ inline bool LoadLevel(SDL_Renderer* renderer, std::vector<LevelObject*> &object,
     });
 
   // Load music
+  ending_duration = 120.00f;
   music_player = Mix_LoadMUS("assets/musics/mus_corrupted_cut.ogg");
   if (music_player == nullptr) {
     throw std::runtime_error("PlaygroundLevel::LoadLevel(): Failed to load music! SDL error: " + std::string(Mix_GetError()));
