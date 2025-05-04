@@ -19,7 +19,27 @@ void mAudio::Init() {
 }
 
 void mAudio::Destroy() {
+  for (auto& p : sound_map) {
+    Mix_FreeChunk(p.second);
+  }
+  sound_map.clear();
   Mix_Quit();
+}
+
+bool mAudio::LoadSound(const std::string& id, const char* filename) {
+  Mix_Chunk* sound = Mix_LoadWAV(filename);
+  if (!sound) {
+    std::cout << "Failed to load sound " << filename << ". Error: " << Mix_GetError() << std::endl;
+    return false;
+  }
+  sound_map[id] = sound;
+  return true;
+}
+
+bool mAudio::PlaySound(const char* id) {
+  if (sound_map.find(id) != sound_map.end()) {
+    Mix_PlayChannel(-1, sound_map[id], 0);
+  }
 }
 
 #undef cerr
