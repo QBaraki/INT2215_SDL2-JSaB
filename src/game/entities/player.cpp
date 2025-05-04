@@ -38,7 +38,6 @@ Player::Player(SDL_Renderer* renderer_, int size_, int x_, int y_)
 }
 
 Player::~Player() {
-  SDL_DestroyTexture(texture);
   texture = nullptr;
   idle_gif = nullptr;
 }
