@@ -19,7 +19,6 @@ class Player : public MonoBehaviour {
   SDL_Texture* texture;
   SDL_Texture* idle_gif;
   SDL_Rect rect;
-  Vec2d velocity;
   float angle;
   int size;
   bool is_moving, play_idle;
@@ -32,6 +31,7 @@ class Player : public MonoBehaviour {
 
  public:
   int hitpoint;
+  Vec2d velocity;
   Vec2d position;
   Vec2d start_position;
 

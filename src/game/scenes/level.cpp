@@ -3,6 +3,7 @@
 #include "common.h"
 #include "managers/texture.h"
 #include "managers/scene.h"
+#include "game/scenes/pause_menu.h"
 #include "game/levels/00_Playground.h"
 
 #ifdef NDEBUG
@@ -40,6 +41,11 @@ void Level::EventHandler(SDL_Event& event) {
   if (!level_loaded) {
     return;
   }
+  if (event.type == SDL_KEYDOWN && event.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
+    player->velocity = {0.0f, 0.0f};
+    mScene::stack.emplace(new PauseMenu(renderer, this));
+    return;
+  }
   player->EventHandler(event);
 }
 
@@ -61,14 +67,14 @@ void Level::Update() {
       throw std::runtime_error("Level::RenderLevel(): Failed to play music! SDL error: " + std::string(Mix_GetError()));
     }
 #ifndef NDEBUG
-    Mix_VolumeMusic(20);
+    Mix_VolumeMusic(25);
     //Mix_SetMusicPosition(83.00f);
 #endif  // NDEBUG
     level_loaded = true;
   }
   player->Update();
 
-  // Check for "out-of-screen" and "is-destryoed" objects and delete them
+  // Check for "out-of-screen" and "is-destroyed" objects and delete them
   std::vector<std::list<LevelObject*>::iterator> target;
   for (std::list<LevelObject*>::iterator it = onscreen_objects.begin(); it != onscreen_objects.end(); it++) {
     if ((*it)->IsOutOfScreen() || (*it)->IsDestroyed()) {

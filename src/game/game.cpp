@@ -44,8 +44,8 @@ Game::Game() {
   //level = nullptr;
   running = true;
 
-  //mScene::stack.emplace(new MainMenu(renderer));
-  mScene::stack.emplace(new Level(renderer));
+  mScene::stack.emplace(new MainMenu(renderer));
+  //mScene::stack.emplace(new Level(renderer));
 }
 
 
