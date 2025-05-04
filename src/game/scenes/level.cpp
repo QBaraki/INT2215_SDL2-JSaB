@@ -4,6 +4,7 @@
 #include "managers/texture.h"
 #include "managers/scene.h"
 #include "game/scenes/pause_menu.h"
+#include "game/scenes/end_screen.h"
 #include "game/levels/00_Playground.h"
 
 #ifdef NDEBUG
@@ -68,7 +69,7 @@ void Level::Update() {
     }
 #ifndef NDEBUG
     Mix_VolumeMusic(25);
-    //Mix_SetMusicPosition(83.00f);
+    Mix_SetMusicPosition(119.00f);
 #endif  // NDEBUG
     level_loaded = true;
   }
@@ -91,8 +92,9 @@ void Level::Update() {
   double current_duration = Mix_GetMusicPosition(music);
 
   if (current_duration >= ending_duration) {
-    Mix_HaltMusic();
+    SDL_Renderer* r = renderer;
     mScene::Pop();
+    mScene::stack.emplace(new EndScreen(r));
     return;
   }
 
