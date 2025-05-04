@@ -27,6 +27,11 @@ void PauseMenu::OnKeyDown(SDL_Event& event) {
     mScene::Pop();
     return;
   }
+  if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
+    mScene::Pop();
+    mScene::Pop();
+    return;
+  }
   if (event.key.keysym.scancode == SDL_SCANCODE_R) {
     Level* new_level = new Level(renderer);
     mScene::Pop();
