@@ -3,6 +3,7 @@
 
 #include <SDL2/SDL_mixer.h>
 
+#include <string>
 #include <map>
 
 namespace mAudio {

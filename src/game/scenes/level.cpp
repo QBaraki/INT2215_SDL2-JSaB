@@ -2,6 +2,7 @@
 
 #include "common.h"
 #include "managers/texture.h"
+#include "managers/audio.h"
 #include "managers/scene.h"
 #include "game/scenes/pause_menu.h"
 #include "game/scenes/end_screen.h"
@@ -69,7 +70,7 @@ void Level::Update() {
     }
 #ifndef NDEBUG
     Mix_VolumeMusic(25);
-    Mix_SetMusicPosition(119.00f);
+    //Mix_SetMusicPosition(119.00f);
 #endif  // NDEBUG
     level_loaded = true;
   }
@@ -111,6 +112,7 @@ void Level::Update() {
     if (!player->IsInvi() && o->IsCollided(player)) {
       cerr << "Level::Update(): Player collided with object from address " << o << '\n';
       if (player->OnHit()) {
+        mAudio::PlaySound("died");
         cerr << "Level::Update(): Player died!\n";
         player_died = true;
         mScene::Pop();

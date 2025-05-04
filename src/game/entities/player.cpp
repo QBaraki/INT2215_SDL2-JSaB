@@ -8,6 +8,7 @@
 #include "common.h"
 #include "managers/time.h"
 #include "managers/texture.h"
+#include "managers/audio.h"
 
 #ifdef NDEBUG
 #define cerr \
@@ -154,7 +155,7 @@ int Player::GetSize() const {
 
 bool Player::IsInvi() const {
 #ifndef NDEBUG
-  return true;
+  //return true;
 #endif  // NDEBUG
   return invi_time > 0.000000000f;
 }
@@ -164,6 +165,7 @@ bool Player::OnHit() {
   if (hitpoint == 0) {
     return true;
   }
+  mAudio::PlaySound("on-hit");
   texture = mTexture::LoadImage(renderer, "assets/player/" + std::to_string(hitpoint) + "_idle.png");
   invi_time = 2.000000000f;
   return false;
