@@ -10,7 +10,7 @@ In the game, players control a colored shape and dodge pink shapes that move to 
 
 I have recreated the first tutorial level ("Corrupted" by Danimal Cannon & Zef) in the game with my interpretation, using [C++](https://en.wikipedia.org/wiki/C++) and [SDL2](https://www.libsdl.org/) for rendering and audio.
 
-Demo link: [Youtube video](https://youtu.be/IpsK_nYVhkw).
+Demo link: [YouTube video](https://youtu.be/g5tNeI9mOIs).
 
 ## How to run
 
