@@ -61,7 +61,8 @@ Folder structure:
 │   ├───bullets  <-------- Graphic for bullet objects
 │   ├───player  <---------      ...for player
 │   ├───UI  <-------------      ...for user interface
-│   └───musics  <--------- Audio for the levels
+│   ├───sfx  <------------ Audio for sound effects
+│   └───musics  <---------    ...for the levels
 └───src
     ├───behaviours  <----- Base class for almost every object
     ├───game
